@@ -1,6 +1,6 @@
 {
   "name": "react-stay-scrolled",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React component to keep content always scrolled down",
   "main": "dist/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/perrin4869/react-always-scrolled.git"
+    "url": "git+https://github.com/perrin4869/react-stay-scrolled.git"
   },
   "keywords": [
     "react-component",
