@@ -1,6 +1,6 @@
 {
   "name": "react-stay-scrolled",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React component to keep content always scrolled down",
   "main": "dist/index.js",
   "scripts": {
@@ -19,9 +19,9 @@
   "author": "Julian Grinblat <julian@dotcore.co.il>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/perrin4869/react-always-scrolled/issues"
+    "url": "https://github.com/perrin4869/react-stay-scrolled/issues"
   },
-  "homepage": "https://github.com/perrin4869/react-always-scrolled#readme",
+  "homepage": "https://github.com/perrin4869/react-stay-scrolled#readme",
   "devDependencies": {
     "babel-plugin-transform-class-properties": "^6.6.0",
     "babel-plugin-transform-object-rest-spread": "^6.6.5",
