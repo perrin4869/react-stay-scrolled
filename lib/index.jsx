@@ -83,7 +83,6 @@ export default class StayScrolled extends Component {
 				}
 			);
 		} else {
-			const dom = this.getDOM();
 			dom.scrollTop = dom.scrollHeight;
 
 			if(onScrolled) onScrolled();
