@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "5"
+  - "5.1"
+  - "4"
+  - "4.2"
+  - "4.1"
+  - "4.0"
+deploy:
+  api_key:
+    secure: INA0IAOLjunhFt0IMHx/z5mM78wahMntGaEl3RlU4fJW0QSApNeoyyKVFAAoX7cvNQv2czoWDpZobDVp0mfKDwFNiK3Nt2EctlMzWJvSZa36aK5vt3tjfduDdHvAPvKAdNwJHcOANL7nc5euFlw9Rm0LJD85yV+aM0SdoT2CIkP/oepieZHKCSIPYmRM1SZwvpfKHP3kAzNbz8Xl0iOF85mLmNz40/2xThzjjKDPCv2aF1e+O/GgNqYurod62OO1Rs6OWooDLimvP7NdyD+JrlqWsv1vuf3hUtwBi+nmFQxT6/4PDTv0TptNQbPEBojjJjb10BYNvzrrKoQ+JwGM78/3Adqd+m0EvT00AL3cLcYzt7iQTuAief40lwo59b+XzGOERvDEFjT7Xns/G8jWwwFuZ+F0Ejg/hMy76ZmnoNn9MjzLQeLrJwmTtcOM9d247GAxPZcvQaPUBz2W28TwpCp1HU8u8nvDQpVhmi1Ke3FHWwhPpBU4uXT5/7inukha4fPiiTC16UY8aMg9CKEVPma4EaDcgZzCWzYGeWDYA2hUpEDYNhfCA6nasgOry8f7cEFMr6sKy9Sx4vowPhsuYYUYryeyDAyPhthnWQ3ldFgIlm7C2jSU6nSYv2vegVw+uDcyTqA9AYJiksfhnAzLpMEsEt4ExJFCx07UE/HhqRw=
+  email: julian@dotcore.co.il
+  provider: npm
+  on:
+    tags: true
+before_script:
+  - npm install -g gulp
+script: gulp
