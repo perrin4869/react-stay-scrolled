@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class StayScrolled extends Component {
+
 	static propTypes = {
 		component: PropTypes.oneOfType([ PropTypes.string, PropTypes.func, PropTypes.element ]),
 		startScrolled: PropTypes.bool,
@@ -23,11 +24,6 @@ export default class StayScrolled extends Component {
 		super(props);
 
 		this.wasScrolled = props.startScrolled;
-
-		this.onScroll = this.onScroll.bind(this);
-		this.storeDOM = this.storeDOM.bind(this);
-		this.scrollBottom = this.scrollBottom.bind(this);
-		this.stayScrolled = this.stayScrolled.bind(this);
 	}
 
 	getChildContext() {
@@ -49,14 +45,14 @@ export default class StayScrolled extends Component {
 		return dom.scrollTop + dom.offsetHeight === dom.scrollHeight
 	}
 
-	onScroll() {
+	onScroll = () => {
 		this.wasScrolled = this.isScrolled();
 
 		if(this.wasScrolled && this.props.onScrolled) 
 			this.props.onScrolled();
 	}
 
-	stayScrolled(notify = true) {
+	stayScrolled = (notify = true) => {
 		const { onStayScrolled } = this.props;
 
 		if(this.wasScrolled)
@@ -66,7 +62,7 @@ export default class StayScrolled extends Component {
 			return onStayScrolled(this.wasScrolled);
 	}
 
-	scrollBottom() {
+	scrollBottom = () => {
 		const { Velocity, onScrolled } = this.props;
 		const dom = this.getDOM();
 
@@ -89,7 +85,7 @@ export default class StayScrolled extends Component {
 		}
 	}
 
-	getDOM() {
+	getDOM = () => {
 		return ReactDOM.findDOMNode(this.dom);
 	}
 
