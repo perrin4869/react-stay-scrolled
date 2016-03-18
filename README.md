@@ -25,19 +25,12 @@ class Messages extends Component {
 		notifyNewMessage: false
 	}
 
-	constructor(props) {
-		super(props);
-
-		this.onStayScrolled = this.onStayScrolled.bind(this);
-		this.onScrolled = this.onScrolled.bind(this);
-	}
-
-	onStayScrolled(isScrolled) {
+	onStayScrolled = (isScrolled) => {
 		// Tell the user to scroll down to see the newest messages if the element wasn't scrolled down
 		this.setState({ notifyNewMessage: !isScrolled });
 	}
 
-	onScrolled() {
+	onScrolled = () => {
 		// The element just scrolled down - remove new messages notification, if any
 		this.setState({ notifyNewMessage: false });
 	}
