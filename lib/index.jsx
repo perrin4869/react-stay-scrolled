@@ -3,108 +3,114 @@ import ReactDOM from 'react-dom';
 
 export default class StayScrolled extends Component {
 
-	static propTypes = {
-		component: PropTypes.oneOfType([ PropTypes.string, PropTypes.func, PropTypes.element ]),
-		startScrolled: PropTypes.bool,
-		onStayScrolled: PropTypes.func,
-		Velocity: PropTypes.func
-	};
+  static propTypes = {
+    component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.element]),
+    children: React.PropTypes.node,
+    startScrolled: PropTypes.bool,
+    onStayScrolled: PropTypes.func,
+    onScrolled: PropTypes.func,
+    Velocity: PropTypes.func,
+  };
 
-	static defaultProps = {
-		component: "div",
-		startScrolled: true
-	}
+  static defaultProps = {
+    component: 'div',
+    startScrolled: true,
+  }
 
-	static childContextTypes = {
-		scrollBottom: PropTypes.func,
-		stayScrolled: PropTypes.func
-	};
+  static childContextTypes = {
+    scrollBottom: PropTypes.func,
+    stayScrolled: PropTypes.func,
+  };
 
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.wasScrolled = props.startScrolled;
-	}
+    this.wasScrolled = props.startScrolled;
+  }
 
-	getChildContext() {
-		return {
-			scrollBottom: this.scrollBottom,
-			stayScrolled: this.stayScrolled
-		};
-	}
+  getChildContext() {
+    return {
+      scrollBottom: this.scrollBottom,
+      stayScrolled: this.stayScrolled,
+    };
+  }
 
-	componentDidMount() {
-		const { startScrolled } = this.props;
+  componentDidMount() {
+    const { startScrolled } = this.props;
 
-		if(startScrolled)
-			this.scrollBottom();
-	}
+    if (startScrolled) {
+      this.scrollBottom();
+    }
+  }
 
-	isScrolled() {
-		const dom = this.getDOM();
-		return dom.scrollTop + dom.offsetHeight === dom.scrollHeight
-	}
+  onScroll = () => {
+    this.wasScrolled = this.isScrolled();
 
-	onScroll = () => {
-		this.wasScrolled = this.isScrolled();
+    if (this.wasScrolled && this.props.onScrolled) {
+      this.props.onScrolled();
+    }
+  }
 
-		if(this.wasScrolled && this.props.onScrolled) 
-			this.props.onScrolled();
-	}
+  getDOM = () => ReactDOM.findDOMNode(this.dom)
 
-	stayScrolled = (notify = true) => {
-		const { onStayScrolled } = this.props;
+  storeDOM(dom) {
+    this.dom = dom;
+  }
 
-		if(this.wasScrolled)
-			this.scrollBottom();
+  isScrolled() {
+    const dom = this.getDOM();
+    return dom.scrollTop + dom.offsetHeight === dom.scrollHeight;
+  }
 
-		if(notify && onStayScrolled)
-			return onStayScrolled(this.wasScrolled);
-	}
+  stayScrolled = (notify = true) => {
+    const { onStayScrolled } = this.props;
 
-	scrollBottom = () => {
-		const { Velocity, onScrolled } = this.props;
-		const dom = this.getDOM();
+    if (this.wasScrolled) {
+      this.scrollBottom();
+    }
 
-		if(Velocity) { // Use smooth scrolling if available
-			Velocity(
-				dom.firstChild,
-				'scroll', 
-				{ 
-					container: dom,
-					offset: dom.scrollHeight,
-					duration: 300,
-					easing: 'ease-out',
-					complete: onScrolled
-				}
-			);
-		} else {
-			dom.scrollTop = dom.scrollHeight;
+    if (notify && onStayScrolled) {
+      onStayScrolled(this.wasScrolled);
+    }
+  }
 
-			if(onScrolled) onScrolled();
-		}
-	}
+  scrollBottom = () => {
+    const { Velocity, onScrolled } = this.props;
+    const dom = this.getDOM();
 
-	getDOM = () => {
-		return ReactDOM.findDOMNode(this.dom);
-	}
+    if (Velocity) { // Use smooth scrolling if available
+      Velocity(
+        dom.firstChild,
+        'scroll',
+        {
+          container: dom,
+          offset: dom.scrollHeight,
+          duration: 300,
+          easing: 'ease-out',
+          complete: onScrolled,
+        }
+      );
+    } else {
+      dom.scrollTop = dom.scrollHeight;
 
-	storeDOM(dom) {
-		this.dom = dom;
-	}
+      if (onScrolled) {
+        onScrolled();
+      }
+    }
+  }
 
-	render() {
-		const  { component, children, ...rest } = this.props;
+  render() {
+    const { component, children, ...rest } = this.props;
 
-		return React.createElement(
-			component, 
-			{
-				ref: this.storeDOM, // Inline function is problematic with null calls
-				onScroll: this.onScroll,
-				...rest
-			},
-			children
-		)
-	}
+    return React.createElement(
+      component,
+      {
+        ref: this.storeDOM, // Inline function is problematic with null calls
+        onScroll: this.onScroll,
+        ...rest,
+      },
+      children
+    );
+  }
 
 }
