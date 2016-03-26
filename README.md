@@ -5,6 +5,10 @@
 
 > Keep your component, such as message boxes, scrolled down
 
+## Live demo
+
+You can see the simplest demo here: [Live demo](https://perrin4869.github.io/react-stay-scrolled)
+
 ## Install
 
 ```
@@ -158,7 +162,7 @@ Can be accessed directly or via context
 
 * Try to automate scrolling on some of the use-cases
 * Support jQuery for animation
-* Setup github.io demo project
+* Improve examples
 * Test
 
 ## License
