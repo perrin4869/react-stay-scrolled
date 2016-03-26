@@ -78,6 +78,8 @@ export default class StayScrolled extends Component {
     const { Velocity, onScrolled } = this.props;
     const dom = this.getDOM();
 
+    if (!dom) return; // Necessary in case this method is called before the component rendered
+
     if (Velocity) { // Use smooth scrolling if available
       Velocity(
         dom.firstChild,
