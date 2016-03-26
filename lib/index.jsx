@@ -53,7 +53,7 @@ export default class StayScrolled extends Component {
 
   getDOM = () => ReactDOM.findDOMNode(this.dom)
 
-  storeDOM(dom) {
+  storeDOM = (dom) => {
     this.dom = dom;
   }
 
