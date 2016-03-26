@@ -2,8 +2,16 @@
 
 ## Install
 
+Run install scripts:
+
 ```
-$ jspm install
+$ npm install && jspm install
+```
+
+Build the client scripts:
+
+```
+gulp build
 ```
 
 ## Usage
