@@ -25,62 +25,62 @@ import StayScrolled from 'react-stay-scrolled';
 
 class Messages extends Component {
 
-	state = {
-		notifyNewMessage: false
-	}
+  state = {
+    notifyNewMessage: false
+  }
 
-	onStayScrolled = (isScrolled) => {
-		// Tell the user to scroll down to see the newest messages if the element wasn't scrolled down
-		this.setState({ notifyNewMessage: !isScrolled });
-	}
+  onStayScrolled = (isScrolled) => {
+    // Tell the user to scroll down to see the newest messages if the element wasn't scrolled down
+    this.setState({ notifyNewMessage: !isScrolled });
+  }
 
-	onScrolled = () => {
-		// The element just scrolled down - remove new messages notification, if any
-		this.setState({ notifyNewMessage: false });
-	}
+  onScrolled = () => {
+    // The element just scrolled down - remove new messages notification, if any
+    this.setState({ notifyNewMessage: false });
+  }
 
-	render() {
-		const { messages } = this.props;
-		const { notifyNewMessage } = this.state;
+  render() {
+    const { messages } = this.props;
+    const { notifyNewMessage } = this.state;
 
-		return (
-			<div>
-				<StayScrolled
-					component="div"
-					onStayScrolled={this.onStayScrolled}
-					onScrolled={this.onScrolled}>
-					{
-						messages.map(
-							(message, i) => <Message key={i} text={message} />
-						)
-					}
-				</StayScrolled>
-				{ notifyNewState && <div>Scroll down to new message</div> }
-			</div>
-		);
-	}
+    return (
+      <div>
+        <StayScrolled
+          component="div"
+          onStayScrolled={this.onStayScrolled}
+          onScrolled={this.onScrolled}>
+          {
+            messages.map(
+              (message, i) => <Message key={i} text={message} />
+            )
+          }
+        </StayScrolled>
+        { notifyNewState && <div>Scroll down to new message</div> }
+      </div>
+    );
+  }
 
 }
 
 class Message extends Component {
 
-	static contextTypes = {
-		stayScrolled: PropTypes.func
-	}
+  static contextTypes = {
+    stayScrolled: PropTypes.func
+  }
 
-	componentDidMount() {
-		const { stayScrolled, scrollDown } = this.context;
+  componentDidMount() {
+    const { stayScrolled, scrollDown } = this.context;
 
-		// Make the parent StayScrolled component scroll down if it was already scrolled
-		stayScrolled();
+    // Make the parent StayScrolled component scroll down if it was already scrolled
+    stayScrolled();
 
-		// Make the parent StayScrolled component scroll down, even if reading previous messages
-		// scrollDown();
-	}
+    // Make the parent StayScrolled component scroll down, even if reading previous messages
+    // scrollDown();
+  }
 
-	render() {
-		return (<div>{this.props.text}</div>);
-	}
+  render() {
+    return (<div>{this.props.text}</div>);
+  }
 
 }
 
@@ -95,24 +95,24 @@ import Velocity from 'velocity';
 
 class Messages extends Component {
 
-	componentDidUpdate(prevProps) {
-		if(prevProps.messages.length < this.props.messages.length)
-			this.stayScrolledElem.stayScrolled(); // Or: this.stayScrolledElem.scrollDown
-	}
+  componentDidUpdate(prevProps) {
+    if(prevProps.messages.length < this.props.messages.length)
+      this.stayScrolledElem.stayScrolled(); // Or: this.stayScrolledElem.scrollDown
+  }
 
-	render() {
-		const { messages } = this.props;
+  render() {
+    const { messages } = this.props;
 
-		return (
-			<StayScrolled Velocity={Velocity} ref={c => { this.stayScrolledElem = c; }}>
-				{
-					messages.map(
-						(message, i) => <Message key={i} text={message} />
-					)
-				}
-			</StayScrolled>
-		);
-	}
+    return (
+      <StayScrolled Velocity={Velocity} ref={c => { this.stayScrolledElem = c; }}>
+        {
+          messages.map(
+            (message, i) => <Message key={i} text={message} />
+          )
+        }
+      </StayScrolled>
+    );
+  }
 
 }
 
