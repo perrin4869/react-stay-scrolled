@@ -1,4 +1,5 @@
 lib
+examples
 gulpfile.js
 
 .gitignore
