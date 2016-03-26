@@ -102,14 +102,14 @@ export default class StayScrolled extends Component {
   render() {
     const { component, children, ...rest } = this.props;
 
-    return React.createElement(
-      component,
-      {
-        ref: this.storeDOM, // Inline function is problematic with null calls
-        onScroll: this.onScroll,
-        ...rest,
-      },
-      children
+    return (
+      <component
+        ref={this.storeDOM}
+        onScroll={this.onScroll}
+        {...rest}
+      >
+        {children}
+      </component>
     );
   }
 
