@@ -1,6 +1,7 @@
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const eslint = require('gulp-eslint');
+const webserver = require('gulp-webserver');
 
 const Builder = require('jspm').Builder;
 
@@ -19,6 +20,19 @@ gulp.task('build', ['lint'], () => {
     mangle: true,
   })
   .catch(err => gutil.log(err));
+});
+
+gulp.task('watch', () => {
+  gulp.watch('src/*.jsx', ['build']);
+});
+
+gulp.task('develop', ['watch'], () => {
+  gulp.src('.')
+  .pipe(webserver({
+    port: 5000,
+    livereload: true,
+    open: true,
+  }));
 });
 
 gulp.task('default', ['build']);
