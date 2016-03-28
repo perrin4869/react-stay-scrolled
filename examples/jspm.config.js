@@ -38,13 +38,13 @@ SystemJS.config({
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
     "react": "npm:react@0.14.7",
     "react-dom": "npm:react-dom@0.14.7",
-    "react-stay-scrolled": "npm:react-stay-scrolled@0.0.5",
+    "react-stay-scrolled": "npm:react-stay-scrolled@0.0.7",
     "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
     "tty": "github:jspm/nodelibs-tty@0.2.0-alpha",
     "util": "github:jspm/nodelibs-util@0.2.0-alpha"
   },
   packages: {
-    "npm:react-stay-scrolled@0.0.5": {
+    "npm:react-stay-scrolled@0.0.7": {
       "map": {
         "react-dom": "npm:react-dom@0.14.7"
       }
@@ -80,7 +80,7 @@ SystemJS.config({
         "babel-runtime": "npm:babel-runtime@5.8.38",
         "chalk": "npm:chalk@1.1.1",
         "esutils": "npm:esutils@2.0.2",
-        "js-tokens": "npm:js-tokens@1.0.2",
+        "js-tokens": "npm:js-tokens@1.0.3",
         "repeating": "npm:repeating@1.1.3"
       }
     },
@@ -175,7 +175,7 @@ SystemJS.config({
     },
     "npm:loose-envify@1.1.0": {
       "map": {
-        "js-tokens": "npm:js-tokens@1.0.2"
+        "js-tokens": "npm:js-tokens@1.0.3"
       }
     },
     "npm:readable-stream@2.0.6": {
