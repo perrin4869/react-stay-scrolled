@@ -3,9 +3,10 @@ import Messages from './messages.jsx';
 
 const style = {
   display: 'inline-block',
-  width: '150px',
+  width: '100px',
   height: '250px',
   overflow: 'auto',
+  border: '1px solid #000',
 };
 
 const StayScrolledDemo = ({}) => (
