@@ -9,12 +9,14 @@ export default class StayScrolled extends Component {
     startScrolled: PropTypes.bool,
     onStayScrolled: PropTypes.func,
     onScrolled: PropTypes.func,
+    stayInaccuracy: PropTypes.number,
     Velocity: PropTypes.func,
   };
 
   static defaultProps = {
     component: 'div',
     startScrolled: true,
+    stayInaccuracy: 0,
   }
 
   static childContextTypes = {
@@ -59,7 +61,8 @@ export default class StayScrolled extends Component {
 
   isScrolled() {
     const dom = this.getDOM();
-    return dom.scrollTop + dom.offsetHeight === dom.scrollHeight;
+
+    return dom.scrollTop + dom.clientHeight === dom.scrollHeight;
   }
 
   stayScrolled = (notify = true) => {
