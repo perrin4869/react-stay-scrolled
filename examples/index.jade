@@ -1,0 +1,16 @@
+doctype html
+html(lang='en')
+  head
+    title React Stay Scrolled Demo
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width,initial-scale=1,maximum-scale=1")
+  body
+    div#demo
+    script(src="jspm_packages/system.js")
+    script(src="jspm.browser.js")
+    script(src="jspm.config.js")
+    -if (env !== "development")
+      script(src="lib/react-stay-scrolled-demo.js")
+    script.
+      SystemJS.import('react-stay-scrolled-demo');
+

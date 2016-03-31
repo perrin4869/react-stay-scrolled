@@ -4,6 +4,7 @@
   "description": "Live examples of react-stay-scrolled in action",
   "main": "src/main.jsx",
   "scripts": {
+    "start": "NODE_ENV=production node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -76,8 +77,12 @@
   },
   "devDependencies": {
     "gulp": "^3.9.1",
+    "gulp-live-server": "0.0.29",
     "gulp-util": "^3.0.7",
-    "gulp-webserver": "^0.9.1",
     "jspm": "^0.17.0-beta.12"
+  },
+  "dependencies": {
+    "express": "^4.13.4",
+    "jade": "^1.11.0"
   }
 }
