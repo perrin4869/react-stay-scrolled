@@ -11,12 +11,14 @@ export default class StayScrolled extends Component {
     onScrolled: PropTypes.func,
     stayInaccuracy: PropTypes.number,
     Velocity: PropTypes.func,
+    debug: PropTypes.func,
   };
 
   static defaultProps = {
     component: 'div',
     startScrolled: true,
     stayInaccuracy: 0,
+    debug: () => {},
   }
 
   static childContextTypes = {
@@ -55,15 +57,16 @@ export default class StayScrolled extends Component {
 
   getDOM = () => ReactDOM.findDOMNode(this.dom)
 
-  storeDOM = (dom) => {
-    this.dom = dom;
-  }
+  storeDOM = (dom) => { this.dom = dom; }
 
   isScrolled() {
-    const { stayInaccuracy } = this.props;
+    const { stayInaccuracy, debug } = this.props;
     const dom = this.getDOM();
+    const { scrollTop, clientHeight, scrollHeight } = dom;
 
-    return dom.scrollTop + dom.clientHeight >= dom.scrollHeight - stayInaccuracy;
+    debug(`scollTop=${scrollTop}, clientHeight=${clientHeight}, scrollHeight=${scrollHeight}`);
+
+    return scrollTop + clientHeight >= scrollHeight - stayInaccuracy;
   }
 
   stayScrolled = (notify = true) => {
