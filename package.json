@@ -36,5 +36,8 @@
   },
   "dependencies": {
     "react-dom": "^0.14.8"
+  },
+  "jspm": {
+    "registry": "jspm"
   }
 }

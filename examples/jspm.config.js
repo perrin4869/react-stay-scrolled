@@ -23,7 +23,8 @@ SystemJS.config({
   packageConfigPaths: [
     "npm:@*/*.json",
     "npm:*.json",
-    "github:*/*.json"
+    "github:*/*.json",
+    "local:*.json"
   ],
   map: {
     "babel-plugin-transform-class-properties": "npm:babel-plugin-transform-class-properties@6.6.0",
