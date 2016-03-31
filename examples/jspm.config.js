@@ -36,17 +36,22 @@ SystemJS.config({
     "path": "github:jspm/nodelibs-path@0.2.0-alpha",
     "plugin-babel": "npm:systemjs-plugin-babel@0.0.8",
     "process": "github:jspm/nodelibs-process@0.2.0-alpha",
-    "react": "npm:react@0.14.7",
-    "react-dom": "npm:react-dom@0.14.7",
-    "react-stay-scrolled": "npm:react-stay-scrolled@0.0.7",
+    "react": "npm:react@0.14.8",
+    "react-dom": "npm:react-dom@0.14.8",
+    "react-stay-scrolled": "local:react-stay-scrolled@0.1.0",
     "stream": "github:jspm/nodelibs-stream@0.2.0-alpha",
     "tty": "github:jspm/nodelibs-tty@0.2.0-alpha",
     "util": "github:jspm/nodelibs-util@0.2.0-alpha"
   },
   packages: {
-    "npm:react-stay-scrolled@0.0.7": {
+    "local:react-stay-scrolled@0.1.0": {
       "map": {
-        "react-dom": "npm:react-dom@0.14.7"
+        "react-dom": "npm:react-dom@0.14.8"
+      }
+    },
+    "npm:react@0.14.8": {
+      "map": {
+        "fbjs": "npm:fbjs@0.6.1"
       }
     },
     "npm:babel-plugin-syntax-class-properties@6.5.0": {
@@ -70,7 +75,7 @@ SystemJS.config({
         "stream-browserify": "npm:stream-browserify@2.0.1"
       }
     },
-    "npm:ansi-styles@2.2.0": {
+    "npm:ansi-styles@2.2.1": {
       "map": {
         "color-convert": "npm:color-convert@1.0.0"
       }
@@ -146,7 +151,7 @@ SystemJS.config({
     },
     "npm:chalk@1.1.1": {
       "map": {
-        "ansi-styles": "npm:ansi-styles@2.2.0",
+        "ansi-styles": "npm:ansi-styles@2.2.1",
         "escape-string-regexp": "npm:escape-string-regexp@1.0.5",
         "has-ansi": "npm:has-ansi@2.0.0",
         "strip-ansi": "npm:strip-ansi@3.0.1",
@@ -202,11 +207,6 @@ SystemJS.config({
     "npm:strip-ansi@3.0.1": {
       "map": {
         "ansi-regex": "npm:ansi-regex@2.0.0"
-      }
-    },
-    "npm:react@0.14.7": {
-      "map": {
-        "fbjs": "npm:fbjs@0.6.1"
       }
     }
   }
