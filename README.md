@@ -126,6 +126,10 @@ Available props:
 
 Type: a React `component`, default: `"div"`. Passed to `React.createElement`, used to wrap the children
 
+### debug
+
+Type: a function, used to log debug messages in StayScrolled, usually `(msg) => { console.log(msg); }`
+
 ### stayAccuracy
 
 Type: number, default: 0, defines an error margin, in pixels, under which `stayScrolled` will still scroll to the bottom
