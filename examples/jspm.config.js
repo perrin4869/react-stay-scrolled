@@ -4,6 +4,11 @@ SystemJS.config({
     "react-stay-scrolled-demo": {
       "main": "main.jsx",
       "format": "esm",
+      "map": {
+        "./debug.js": {
+          "~production": "./debug.dev.js"
+        }
+      },
       "meta": {
         "*.jsx": {
           "loader": "plugin-babel",

@@ -5,6 +5,7 @@
   "main": "src/main.jsx",
   "scripts": {
     "start": "NODE_ENV=production node server.js",
+    "dev": "gulp develop",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
