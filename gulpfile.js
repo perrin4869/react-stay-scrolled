@@ -9,9 +9,9 @@ gulp.task('lint', () => (
 ));
 
 gulp.task('build', ['lint'], () => (
-  gulp.src('lib/index.jsx')
+  gulp.src('src/index.jsx')
   .pipe(babel())
-  .pipe(gulp.dest('dist'))
+  .pipe(gulp.dest('lib'))
 ));
 
 gulp.task('default', ['build']);
