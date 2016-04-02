@@ -50,6 +50,15 @@ SystemJS.config({
     "util": "github:jspm/nodelibs-util@0.2.0-alpha"
   },
   packages: {
+    "npm:chalk@1.1.3": {
+      "map": {
+        "ansi-styles": "npm:ansi-styles@2.2.1",
+        "escape-string-regexp": "npm:escape-string-regexp@1.0.5",
+        "has-ansi": "npm:has-ansi@2.0.0",
+        "strip-ansi": "npm:strip-ansi@3.0.1",
+        "supports-color": "npm:supports-color@2.0.0"
+      }
+    },
     "local:react-stay-scrolled@0.1.0": {
       "map": {
         "react-dom": "npm:react-dom@0.14.8"
@@ -89,7 +98,7 @@ SystemJS.config({
     "npm:babel-code-frame@6.7.4": {
       "map": {
         "babel-runtime": "npm:babel-runtime@5.8.38",
-        "chalk": "npm:chalk@1.1.1",
+        "chalk": "npm:chalk@1.1.3",
         "esutils": "npm:esutils@2.0.2",
         "js-tokens": "npm:js-tokens@1.0.3",
         "repeating": "npm:repeating@1.1.3"
@@ -153,15 +162,6 @@ SystemJS.config({
         "base64-js": "npm:base64-js@1.1.2",
         "ieee754": "npm:ieee754@1.1.6",
         "isarray": "npm:isarray@1.0.0"
-      }
-    },
-    "npm:chalk@1.1.1": {
-      "map": {
-        "ansi-styles": "npm:ansi-styles@2.2.1",
-        "escape-string-regexp": "npm:escape-string-regexp@1.0.5",
-        "has-ansi": "npm:has-ansi@2.0.0",
-        "strip-ansi": "npm:strip-ansi@3.0.1",
-        "supports-color": "npm:supports-color@2.0.0"
       }
     },
     "npm:debug@2.2.0": {
