@@ -2,7 +2,7 @@
 const express = require('express');
 
 const app = express();
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.set('views', __dirname); // view engine setup
 app.set('view engine', 'jade'); // view engine setup
@@ -15,5 +15,5 @@ app.use('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log('Server listening on http://localhost:8080, Ctrl+C to stop');
+  console.log(`Server listening on http://localhost:${PORT}, Ctrl+C to stop`);
 });
