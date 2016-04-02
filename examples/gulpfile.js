@@ -14,7 +14,7 @@ gulp.task('lint', () => (
 gulp.task('build', ['lint'], () => {
   const builder = new Builder();
 
-  return builder.bundle('react-stay-scrolled-demo', 'lib/react-stay-scrolled-demo.js', {
+  return builder.buildStatic('react-stay-scrolled-demo', 'client.js', {
     sourceMaps: true,
     minify: true,
     mangle: true,
