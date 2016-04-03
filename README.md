@@ -12,7 +12,7 @@ You can see the simplest demo here: [Live demo](https://perrin4869.github.io/rea
 ## Install
 
 ```
-$ npm install --save-dev react-stay-scrolled
+$ npm install --save react-stay-scrolled
 ```
 
 ## Usage
