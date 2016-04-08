@@ -13,8 +13,8 @@
   "jspm": {
     "name": "react-stay-scrolled-demo",
     "dependencies": {
-      "react-dom": "npm:react-dom@^0.14.7",
-      "react-stay-scrolled": "local:react-stay-scrolled@0.1.0"
+      "react-dom": "npm:react-dom@^15.0.0",
+      "react-stay-scrolled": "local:react-stay-scrolled@0.2.0"
     },
     "devDependencies": {
       "babel-plugin-transform-class-properties": "npm:babel-plugin-transform-class-properties@^6.6.0",
@@ -22,17 +22,24 @@
       "plugin-babel": "npm:systemjs-plugin-babel@^0.0.8"
     },
     "peerDependencies": {
+      "assert": "github:jspm/nodelibs-assert@^0.2.0-alpha",
       "buffer": "github:jspm/nodelibs-buffer@^0.2.0-alpha",
       "core-js": "npm:core-js@^1.2.0",
+      "domain": "github:jspm/nodelibs-domain@^0.2.0-alpha",
       "events": "github:jspm/nodelibs-events@^0.2.0-alpha",
       "fs": "github:jspm/nodelibs-fs@^0.2.0-alpha",
+      "http": "github:jspm/nodelibs-http@^0.2.0-alpha",
+      "https": "github:jspm/nodelibs-https@^0.2.0-alpha",
       "net": "github:jspm/nodelibs-net@^0.2.0-alpha",
       "path": "github:jspm/nodelibs-path@^0.2.0-alpha",
       "process": "github:jspm/nodelibs-process@^0.2.0-alpha",
-      "react": "npm:react@^0.14.8",
+      "react": "npm:react@^15.0.0",
       "stream": "github:jspm/nodelibs-stream@^0.2.0-alpha",
+      "string_decoder": "github:jspm/nodelibs-string_decoder@^0.2.0-alpha",
       "tty": "github:jspm/nodelibs-tty@^0.2.0-alpha",
-      "util": "github:jspm/nodelibs-util@^0.2.0-alpha"
+      "url": "github:jspm/nodelibs-url@^0.2.0-alpha",
+      "util": "github:jspm/nodelibs-util@^0.2.0-alpha",
+      "zlib": "github:jspm/nodelibs-zlib@^0.2.0-alpha"
     },
     "overrides": {
       "npm:babel-runtime@5.8.38": {
@@ -42,37 +49,22 @@
           "core-js": "^1.2.0"
         }
       },
-      "npm:fbjs@0.6.1": {
-        "dependencies": {}
+      "npm:browserify-zlib@0.1.4": {
+        "dependencies": {
+          "readable-stream": "^2.0.2",
+          "pako": "~0.2.0"
+        },
+        "map": {
+          "_stream_transform": "readable-stream/transform"
+        }
       },
       "npm:inherits@2.0.1": {
         "ignore": [
           "test.js"
         ]
       },
-      "npm:react@0.14.8": {
-        "dependencies": {
-          "fbjs": "^0.6.1"
-        },
-        "format": "cjs",
-        "meta": {
-          "*": {
-            "globals": {
-              "process": "process"
-            }
-          }
-        },
-        "map": {
-          "fbjs/lib/ExecutionEnvironment.js": {
-            "production": "@empty"
-          },
-          "./lib/ReactDefaultPerf.js": {
-            "production": "@empty"
-          },
-          "./lib/ReactTestUtils.js": {
-            "production": "@empty"
-          }
-        }
+      "npm:whatwg-fetch@0.11.0": {
+        "jspmNodeConversion": false
       }
     }
   },
