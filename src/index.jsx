@@ -64,7 +64,7 @@ export default class StayScrolled extends Component {
     const dom = this.getDOM();
     const { scrollTop, clientHeight, scrollHeight } = dom;
 
-    debug(`scollTop=${scrollTop}, clientHeight=${clientHeight}, scrollHeight=${scrollHeight}`);
+    debug(`isScrolled: scollTop=${scrollTop}, clientHeight=${clientHeight}, scrollHeight=${scrollHeight}`);
 
     // scrollTop is a floating point, the rest are integers rounded up
     // naively: actualScrollHeight = scrollHeight - (Math.ceil(scrollTop) - scrollTop)
@@ -84,10 +84,14 @@ export default class StayScrolled extends Component {
   }
 
   scrollBottom = () => {
-    const { Velocity, onScrolled } = this.props;
+    const { Velocity, onScrolled, debug } = this.props;
     const dom = this.getDOM();
 
     if (!dom) return; // Necessary in case this method is called before the component rendered
+
+    const { scrollHeight } = dom;
+
+    debug(`Scrolling bottom: scrollHeight=${scrollHeight}`);
 
     if (Velocity) { // Use smooth scrolling if available
       Velocity(
@@ -95,14 +99,14 @@ export default class StayScrolled extends Component {
         'scroll',
         {
           container: dom,
-          offset: dom.scrollHeight,
+          offset: scrollHeight,
           duration: 300,
           easing: 'ease-out',
           complete: onScrolled,
         }
       );
     } else {
-      dom.scrollTop = dom.scrollHeight;
+      dom.scrollTop = scrollHeight;
 
       if (onScrolled) {
         onScrolled();
