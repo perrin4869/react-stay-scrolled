@@ -66,7 +66,9 @@ export default class StayScrolled extends Component {
 
     debug(`scollTop=${scrollTop}, clientHeight=${clientHeight}, scrollHeight=${scrollHeight}`);
 
-    return scrollTop + clientHeight >= scrollHeight - stayInaccuracy;
+    // scrollTop is a floating point, the rest are integers rounded up
+    // naively: actualScrollHeight = scrollHeight - (Math.ceil(scrollTop) - scrollTop)
+    return Math.ceil(scrollTop) + clientHeight >= (scrollHeight) - stayInaccuracy;
   }
 
   stayScrolled = (notify = true) => {
