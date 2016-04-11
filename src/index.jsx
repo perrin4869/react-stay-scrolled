@@ -116,15 +116,16 @@ export default class StayScrolled extends Component {
 
   render() {
     const { component, children, ...rest } = this.props;
+    const WrapperComponent = component; // Upper case for jsx
 
     return (
-      <component
+      <WrapperComponent
         ref={this.storeDOM}
         onScroll={this.onScroll}
         {...rest}
       >
         {children}
-      </component>
+      </WrapperComponent>
     );
   }
 
