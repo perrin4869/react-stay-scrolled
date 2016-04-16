@@ -119,9 +119,7 @@ class Messages extends Component {
 }
 ```
 
-## API
-
-Available props:
+## Props
 
 ### component
 
@@ -149,7 +147,7 @@ Type: function, fires after executing `stayScrolled`, notifies back whether or n
 
 Type: function, fires when the element scrolls down, useful to remove the new message notification
 
-Methods:
+## Methods
 
 ### stayScrolled(notify = true)
 
