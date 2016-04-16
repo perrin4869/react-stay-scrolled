@@ -32,11 +32,13 @@
     "eslint-plugin-react": "^4.2.3",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-eslint": "^2.0.0"
+    "gulp-eslint": "^2.0.0",
+    "react-dom": "^15.0.1"
   },
-  "dependencies": {
-    "react-dom": "^15.0.0"
+  "peerDependencies": {
+    "react-dom": "^0.14.0"
   },
+  "dependencies": {},
   "jspm": {
     "registry": "jspm"
   }
