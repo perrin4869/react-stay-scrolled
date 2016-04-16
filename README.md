@@ -55,7 +55,7 @@ class Messages extends Component {
             )
           }
         </StayScrolled>
-        { notifyNewState && <div>Scroll down to new message</div> }
+        { notifyNewMessage && <div>Scroll down to new message</div> }
       </div>
     );
   }
@@ -115,7 +115,6 @@ class Messages extends Component {
   }
 
 }
-
 ```
 
 ## API
@@ -171,6 +170,7 @@ Can be accessed directly or via context
 * Try to automate scrolling on some of the use-cases
 * Support jQuery for animation
 * Improve examples
+* Improve documentation with tables, etc
 * Test
 
 ## License
