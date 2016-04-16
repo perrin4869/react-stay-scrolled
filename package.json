@@ -33,10 +33,11 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-eslint": "^2.0.0",
-    "react-dom": "^15.0.1"
+    "react-dom": "^15.0.1",
+    "react": "^15.0.1"
   },
   "peerDependencies": {
-    "react-dom": "^0.14.0"
+    "react-dom": "^0.14.0 || ^15.0.0"
   },
   "dependencies": {},
   "jspm": {
