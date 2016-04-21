@@ -10,6 +10,8 @@ export default class StayScrolled extends Component {
     onStayScrolled: PropTypes.func,
     onScrolled: PropTypes.func,
     stayInaccuracy: PropTypes.number,
+    triggerStayScrolled: PropTypes.any,
+    triggerScrollBottom: PropTypes.any,
     Velocity: PropTypes.func,
     debug: PropTypes.func,
   };
@@ -30,6 +32,22 @@ export default class StayScrolled extends Component {
     super(props);
 
     this.wasScrolled = props.startScrolled;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    // Update component only if the changes aren't a trigger
+    const { triggerStayScrolled, triggerScrollBottom } = this.props;
+    return triggerStayScrolled === nextProps.triggerStayScrolled && triggerScrollBottom === nextProps.triggerScrollBottom;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { triggerStayScrolled, triggerScrollBottom } = this.props;
+    if(triggerStayScrolled !== nextProps.triggerStayScrolled) {
+      this.stayScrolled();
+    }
+    else if(triggerScrollBottom !== nextProps.triggerScrollBottom) {
+      this.scrollBottom();
+    }
   }
 
   getChildContext() {

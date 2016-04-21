@@ -133,6 +133,14 @@ Type: a function, used to log debug messages in StayScrolled, usually `(msg) => 
 
 Type: number, default: 0, defines an error margin, in pixels, under which `stayScrolled` will still scroll to the bottom
 
+### triggerStayScrolled
+
+Type: any, upon modification, a stay scrolled is triggered
+
+### triggerScrollBottom
+
+Type: any, upon modification, a scroll bottom is triggered
+
 ### Velocity
 
 Type: `function` optional, default: `null`
