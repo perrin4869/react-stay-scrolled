@@ -135,7 +135,11 @@ Type: number, default: 0, defines an error margin, in pixels, under which `stayS
 
 ### triggerStayScrolled
 
-Type: any, upon modification, a stay scrolled is triggered
+Type: any, upon modification, a stay scrolled is triggered, without triggering an event notification
+
+### triggerStayScrolledNotify
+
+Type: any, upon modification, a stay scrolled is triggered, triggering an event notification
 
 ### triggerScrollBottom
 
