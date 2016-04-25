@@ -21,7 +21,8 @@ $ npm install --save react-stay-scrolled
 
 `react-stay-scrolled` injects methods `stayScrolled` and `scrollBottom` to its children through the `context`:
 
-```js
+```javascript
+// messages.jsx
 import React, { Component, PropTypes } from 'react';
 import StayScrolled from 'react-stay-scrolled';
 
@@ -63,20 +64,27 @@ class Messages extends Component {
   }
 
 }
+```
+
+```javascript
+// message.jsx
+import React, { Component, propTypes } from 'react';
+import { scrolled } from 'react-stay-scrolled';
 
 class Message extends Component {
 
-  static contextTypes = {
-    stayScrolled: PropTypes.func
+  static propTypes = {
+    stayScrolled: PropTypes.func,
+    scrollDown: PropTypes.func,
   }
 
   componentDidMount() {
-    const { stayScrolled, scrollDown } = this.context;
+    const { stayScrolled, scrollDown } = this.props;
 
     // Make the parent StayScrolled component scroll down if it was already scrolled
     stayScrolled();
 
-    // Make the parent StayScrolled component scroll down, even if reading previous messages
+    // Make the parent StayScrolled component scroll down, even if not completely scrolled down
     // scrollDown();
   }
 
@@ -86,6 +94,7 @@ class Message extends Component {
 
 }
 
+export default scrolled(Message);
 ```
 
 The methods can also be called directly from the `StayScrolled` element instance:
@@ -159,13 +168,19 @@ Type: function, fires after executing `stayScrolled`, notifies back whether or n
 
 Type: function, fires when the element scrolls down, useful to remove the new message notification
 
+## Higher order component
+
+### scrolled
+
+Injects `stayScrolled` and `scrollBottom` to the props of a child element of `StayScrolled`
+
 ## Methods
 
 ### stayScrolled(notify = true)
 
 Scrolls down the element if it was already scrolled down - useful for when a user is reading previous messages, and you don't want to interrupt
 
-Can be accessed directly or via context
+Can be accessed by injecting into props with `scrolled` higher order component, called directly from a `StayScrolled` instance, or via context
 
 #### notify
 
@@ -175,7 +190,7 @@ Type: `boolean` optional, default `true`. If `true`, it fires an `onStayScrolled
 
 Scrolls down the wrapper element, regardless of current position
 
-Can be accessed directly or via context
+Can be accessed by injecting into props with `scrolled` higher order component, called directly from a `StayScrolled` instance, or via context
 
 ## TODO
 

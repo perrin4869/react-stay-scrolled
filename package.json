@@ -41,7 +41,9 @@
   "peerDependencies": {
     "react-dom": "^0.14.0 || ^15.0.0"
   },
-  "dependencies": {},
+  "dependencies": {
+    "hoist-non-react-statics": "^1.0.5"
+  },
   "jspm": {
     "registry": "jspm"
   }

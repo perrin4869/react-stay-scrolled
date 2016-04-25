@@ -1,11 +1,11 @@
-import React, { PropTypes, Component } from 'react';
+import { PropTypes, Component, createElement } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class StayScrolled extends Component {
 
   static propTypes = {
     component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.element]),
-    children: React.PropTypes.node,
+    children: PropTypes.node,
     startScrolled: PropTypes.bool,
     onStayScrolled: PropTypes.func,
     onScrolled: PropTypes.func,
@@ -35,29 +35,6 @@ export default class StayScrolled extends Component {
     this.wasScrolled = props.startScrolled;
   }
 
-  shouldComponentUpdate(nextProps) {
-    // Update component only if the changes aren't a trigger
-    const { triggerStayScrolled, triggerStayScrolledNotify, triggerScrollBottom } = this.props;
-    return (
-      triggerStayScrolled === nextProps.triggerStayScrolled && 
-      triggerStayScrolledNotify === nextProps.triggerStayScrolledNotify && 
-      triggerScrollBottom === nextProps.triggerScrollBottom
-    );
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { triggerStayScrolled, triggerStayScrolledNotify, triggerScrollBottom } = this.props;
-    if(triggerStayScrolled !== nextProps.triggerStayScrolled) {
-      this.stayScrolled(false);
-    }
-    else if(triggerStayScrolledNotify !== nextProps.triggerStayScrolledNotify) {
-      this.stayScrolled(true);
-    }
-    else if(triggerScrollBottom !== nextProps.triggerScrollBottom) {
-      this.scrollBottom();
-    }
-  }
-
   getChildContext() {
     return {
       scrollBottom: this.scrollBottom,
@@ -71,6 +48,27 @@ export default class StayScrolled extends Component {
     if (startScrolled) {
       this.scrollBottom();
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { triggerStayScrolled, triggerStayScrolledNotify, triggerScrollBottom } = this.props;
+    if (triggerStayScrolled !== nextProps.triggerStayScrolled) {
+      this.stayScrolled(false);
+    } else if (triggerStayScrolledNotify !== nextProps.triggerStayScrolledNotify) {
+      this.stayScrolled(true);
+    } else if (triggerScrollBottom !== nextProps.triggerScrollBottom) {
+      this.scrollBottom();
+    }
+  }
+
+  shouldComponentUpdate(nextProps) {
+    // Update component only if the changes aren't a trigger
+    const { triggerStayScrolled, triggerStayScrolledNotify, triggerScrollBottom } = this.props;
+    return (
+      triggerStayScrolled === nextProps.triggerStayScrolled &&
+      triggerStayScrolledNotify === nextProps.triggerStayScrolledNotify &&
+      triggerScrollBottom === nextProps.triggerScrollBottom
+    );
   }
 
   onScroll = () => {
@@ -142,17 +140,13 @@ export default class StayScrolled extends Component {
 
   render() {
     const { component, children, ...rest } = this.props;
-    const WrapperComponent = component; // Upper case for jsx
+    const props = {
+      ref: this.storeDOM,
+      onScroll: this.onScroll,
+      ...rest,
+    };
 
-    return (
-      <WrapperComponent
-        ref={this.storeDOM}
-        onScroll={this.onScroll}
-        {...rest}
-      >
-        {children}
-      </WrapperComponent>
-    );
+    return createElement(component, props, children);
   }
 
 }

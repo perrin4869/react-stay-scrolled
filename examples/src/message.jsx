@@ -1,17 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import { scrolled } from 'react-stay-scrolled';
 
-export default class Message extends Component {
+class Message extends Component {
 
   static propTypes = {
     text: PropTypes.string.isRequired,
-  }
-
-  static contextTypes = {
     stayScrolled: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
-    const { stayScrolled } = this.context;
+    const { stayScrolled } = this.props;
     stayScrolled();
   }
 
@@ -22,3 +20,5 @@ export default class Message extends Component {
   }
 
 }
+
+export default scrolled(Message);
