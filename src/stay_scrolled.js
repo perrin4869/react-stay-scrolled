@@ -13,6 +13,7 @@ export default class StayScrolled extends Component {
     triggerStayScrolled: PropTypes.any,
     triggerStayScrolledNotify: PropTypes.any,
     triggerScrollBottom: PropTypes.any,
+    provideControllers: PropTypes.func,
     Velocity: PropTypes.func,
     debug: PropTypes.func,
   };
@@ -37,16 +38,23 @@ export default class StayScrolled extends Component {
 
   getChildContext() {
     return {
-      scrollBottom: this.scrollBottom,
       stayScrolled: this.stayScrolled,
+      scrollBottom: this.scrollBottom,
     };
   }
 
   componentDidMount() {
-    const { startScrolled } = this.props;
+    const { startScrolled, provideControllers } = this.props;
 
     if (startScrolled) {
       this.scrollBottom();
+    }
+
+    if (provideControllers) {
+      provideControllers({
+        stayScrolled: this.stayScrolled,
+        scrollBottom: this.scrollBottom,
+      });
     }
   }
 
