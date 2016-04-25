@@ -25,9 +25,95 @@ $ npm install --save react-stay-scrolled
 // messages.jsx
 import React, { Component, PropTypes } from 'react';
 import StayScrolled from 'react-stay-scrolled';
+import Message from './message.jsx';
+
+const Messages = ({ messages }) => (
+  <StayScrolled component="div">
+    {
+      messages.map(
+        (message, i) => <Message key={i} text={message} />
+      )
+    }
+  </StayScrolled>
+);
+
+Messages.propTypes = {
+  messages = PropTypes.array
+}
+```
+
+```javascript
+// message.jsx
+import React, { Component, propTypes } from 'react';
+import { scrolled } from 'react-stay-scrolled';
+
+class Message extends Component {
+  static propTypes = {
+    stayScrolled: PropTypes.func,
+    scrollDown: PropTypes.func,
+  }
+
+  componentDidMount() {
+    const { stayScrolled, scrollDown } = this.props;
+
+    // Make the parent StayScrolled component scroll down if it was already scrolled
+    stayScrolled();
+
+    // Make the parent StayScrolled component scroll down, even if not completely scrolled down
+    // scrollDown();
+  }
+
+  render() {
+    return (<div>{this.props.text}</div>);
+  }
+}
+
+export default scrolled(Message);
+```
+
+The methods can also be called from the parent element:
+
+```javascript
+import React, { Component, PropTypes } from 'react';
+import StayScrolled from 'react-stay-scrolled';
+import Velocity from 'velocity';
 
 class Messages extends Component {
+  componentDidUpdate(prevProps) {
+    if(prevProps.messages.length < this.props.messages.length)
+      this.stayScrolled(); // Or: this.scrollDown
+  }
 
+  storeScrolledControllers = ({ stayScrolled, scrollBottom }) => {
+    this.stayScrolled = stayScrolled;
+    this.scrollBottom = scrollBottom;
+  }
+
+  render() {
+    const { messages } = this.props;
+
+    return (
+      <StayScrolled Velocity={Velocity} provideControllers={this.storeScrolledControllers}>
+        {
+          messages.map(
+            (message, i) => <Message key={i} text={message} />
+          )
+        }
+      </StayScrolled>
+    );
+  }
+}
+```
+
+Another use case is notifying users when there is a new message down the window that they haven't read:
+
+```javascript
+// messages.jsx
+import React, { Component, PropTypes } from 'react';
+import StayScrolled from 'react-stay-scrolled';
+import Message from './message.jsx';
+
+class Messages extends Component {
   state = {
     notifyNewMessage: false
   }
@@ -62,74 +148,6 @@ class Messages extends Component {
       </div>
     );
   }
-
-}
-```
-
-```javascript
-// message.jsx
-import React, { Component, propTypes } from 'react';
-import { scrolled } from 'react-stay-scrolled';
-
-class Message extends Component {
-
-  static propTypes = {
-    stayScrolled: PropTypes.func,
-    scrollDown: PropTypes.func,
-  }
-
-  componentDidMount() {
-    const { stayScrolled, scrollDown } = this.props;
-
-    // Make the parent StayScrolled component scroll down if it was already scrolled
-    stayScrolled();
-
-    // Make the parent StayScrolled component scroll down, even if not completely scrolled down
-    // scrollDown();
-  }
-
-  render() {
-    return (<div>{this.props.text}</div>);
-  }
-
-}
-
-export default scrolled(Message);
-```
-
-The methods can also be called from the parent element:
-
-```javascript
-import React, { Component, PropTypes } from 'react';
-import StayScrolled from 'react-stay-scrolled';
-import Velocity from 'velocity';
-
-class Messages extends Component {
-
-  componentDidUpdate(prevProps) {
-    if(prevProps.messages.length < this.props.messages.length)
-      this.stayScrolled(); // Or: this.scrollDown
-  }
-
-  storeScrolledControllers = ({ stayScrolled, scrollBottom }) => {
-    this.stayScrolled = stayScrolled;
-    this.scrollBottom = scrollBottom;
-  }
-
-  render() {
-    const { messages } = this.props;
-
-    return (
-      <StayScrolled Velocity={Velocity} provideControllers={this.storeScrolledControllers}>
-        {
-          messages.map(
-            (message, i) => <Message key={i} text={message} />
-          )
-        }
-      </StayScrolled>
-    );
-  }
-
 }
 ```
 
@@ -137,33 +155,51 @@ class Messages extends Component {
 
 ### component
 
-Type: a React `component`, default: `"div"`. Passed to `React.createElement`, used to wrap the children
+Type: a React `component`, default: `"div"`
+
+Passed to `React.createElement`, used to wrap the children
 
 ### debug
 
-Type: a function, used to log debug messages in StayScrolled, usually `(msg) => { console.log(msg); }`
+Type: `function(msg)`, default `() => {}`
+
+Used to log debug messages in StayScrolled, usually `(msg) => { console.log(msg); }`
 
 ### stayAccuracy
 
-Type: number, default: 0, defines an error margin, in pixels, under which `stayScrolled` will still scroll to the bottom
+Type: `number`, default: `0`
 
-### provideControllers({ stayScrolled, scrollBottom })
+Defines an error margin, in pixels, under which `stayScrolled` will still scroll to the bottom
 
-Type: a function, used for getting scroll controllers to the parent elements, see the controller API below
+### provideControllers
+
+Type: `function({ stayScrolled, scrollBottom })`, default: `null`
+
+Used for getting scroll controllers to the parent elements, see the controller API below
 
 ### Velocity
 
 Type: `function` optional, default: `null`
 
-If passed, scroll will be performed with a smooth animation powered by the Velocity instance passed
+If passed, scroll will be performed with a smooth animation powered by the [Velocity](https://github.com/julianshapiro/velocity) instance passed
 
-### onStayScrolled(scrolled)
+### onStayScrolled
 
-Type: function, fires after executing `stayScrolled`, notifies back whether or not the component is scrolled down. Useful to know if you need to notify the user about new messages
+Type: `function(scrolled)`
 
-### onScrolled()
+Fires after executing `stayScrolled`, notifies back whether or not the component is scrolled down. Useful to know if you need to notify the user about new messages
 
-Type: function, fires when the element scrolls down, useful to remove the new message notification
+### scrolled
+
+Type: `boolean`
+
+True if the call to `stayScrolled` performed a scroll to bottom, false otherwise
+
+### onScrolled
+
+Type: `function()`
+
+Fires when the element scrolls down, useful to remove the new message notification
 
 ## Controllers
 
@@ -171,7 +207,9 @@ Two methods used for controlling scroll behavior.
 Can be accessed by children by injecting into props with `scrolled` higher order component, or via context.
 Can be accessed by parents by passing `provideControllers` prop to `StayScrolled`.
 
-### stayScrolled(notify = true)
+### stayScrolled
+
+Type: `function(notify = true)`
 
 Scrolls down the element if it was already scrolled down - useful for when a user is reading previous messages, and you don't want to interrupt
 
@@ -179,7 +217,9 @@ Scrolls down the element if it was already scrolled down - useful for when a use
 
 Type: `boolean` optional, default `true`. If `true`, it fires an `onStayScrolled` event after execution, notifying whether or not the component stayed scrolled
 
-### scrollDown()
+### scrollDown
+
+Type: `function()`
 
 Scrolls down the wrapper element, regardless of current position
 
@@ -187,7 +227,7 @@ Scrolls down the wrapper element, regardless of current position
 
 ### scrolled
 
-Injects `stayScrolled` and `scrollBottom` to the props of a child element of `StayScrolled`
+Injects the above controllers, `stayScrolled` and `scrollBottom` to the props of a child element of `StayScrolled`
 
 ## TODO
 
