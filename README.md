@@ -151,18 +151,6 @@ Type: number, default: 0, defines an error margin, in pixels, under which `stayS
 
 Type: a function, used for getting scroll controllers to the parent elements, see the controller API below
 
-### triggerStayScrolled
-
-Type: any, upon modification, a stay scrolled is triggered, without triggering an event notification
-
-### triggerStayScrolledNotify
-
-Type: any, upon modification, a stay scrolled is triggered, triggering an event notification
-
-### triggerScrollBottom
-
-Type: any, upon modification, a scroll bottom is triggered
-
 ### Velocity
 
 Type: `function` optional, default: `null`
