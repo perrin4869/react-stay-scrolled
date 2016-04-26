@@ -9,6 +9,16 @@
     },
   },
 
+  "settings": {
+      "import/resolver": {
+        "jspm": {
+          "moduleDirectory": "jspm_packages",
+          "rootDir": "examples"
+        },
+        "node": true
+      }
+  },
+
   "rules": {
     "max-len": ["error", 150],
     "new-cap": [2, {
