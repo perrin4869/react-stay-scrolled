@@ -215,7 +215,9 @@ Scrolls down the element if it was already scrolled down - useful for when a use
 
 #### notify
 
-Type: `boolean` optional, default `true`. If `true`, it fires an `onStayScrolled` event after execution, notifying whether or not the component stayed scrolled
+Type: `boolean` optional, default `true`.
+
+If `true`, it fires an `onStayScrolled` event after execution, notifying whether or not the component stayed scrolled
 
 ### scrollDown
 
