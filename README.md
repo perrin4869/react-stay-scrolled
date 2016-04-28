@@ -249,8 +249,8 @@ See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 [npm-badge]: https://img.shields.io/npm/v/react-stay-scrolled.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/react-stay-scrolled
 
-[dependency-status-badge]: https://david-dm.org/perrin4869/react-stay-scrolled.svg?style=flat
+[dependency-status-badge]: https://david-dm.org/perrin4869/react-stay-scrolled.svg?style=flat-square
 [dependency-status]: https://david-dm.org/perrin4869/react-stay-scrolled
 
-[dev-dependency-status-badge]: https://david-dm.org/perrin4869/react-stay-scrolled/dev-status.svg?style=flat
+[dev-dependency-status-badge]: https://david-dm.org/perrin4869/react-stay-scrolled/dev-status.svg?style=flat-square
 [dev-dependency-status]: https://david-dm.org/perrin4869/react-stay-scrolled#info=devDependencies
