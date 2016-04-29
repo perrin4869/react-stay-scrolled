@@ -1,13 +1,6 @@
 import { PropTypes, createElement } from 'react';
 import hoistStatics from 'hoist-non-react-statics';
-
-function getDisplayName(WrappedComponent) {
-  return (
-    WrappedComponent.displayName ||
-    WrappedComponent.name ||
-    (typeof WrappedComponent === 'string') ? WrappedComponent : 'Component'
-  );
-}
+import getDisplayName from 'react-display-name';
 
 export default WrappedComponent => {
   const Scrolled = (props, context) => {
