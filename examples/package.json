@@ -69,7 +69,7 @@
     "gulp": "^3.9.1",
     "gulp-live-server": "0.0.29",
     "gulp-util": "^3.0.7",
-    "jspm": "^0.17.0-beta.13"
+    "jspm": "^0.17.0-beta.14"
   },
   "dependencies": {
     "express": "^4.13.4",
