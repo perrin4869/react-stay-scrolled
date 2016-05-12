@@ -1,3 +1,4 @@
 examples/jspm.browser.js
 examples/jspm.config.js
 lib/*.js
+karma.conf.js
