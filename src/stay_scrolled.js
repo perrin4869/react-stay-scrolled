@@ -2,7 +2,6 @@ import { PropTypes, Component, createElement } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class StayScrolled extends Component {
-
   static propTypes = {
     component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.element]),
     children: PropTypes.node,
@@ -13,7 +12,7 @@ export default class StayScrolled extends Component {
     provideControllers: PropTypes.func,
     Velocity: PropTypes.func,
     debug: PropTypes.func,
-  };
+  }
 
   static defaultProps = {
     component: 'div',
@@ -25,7 +24,7 @@ export default class StayScrolled extends Component {
   static childContextTypes = {
     scrollBottom: PropTypes.func,
     stayScrolled: PropTypes.func,
-  };
+  }
 
   constructor(props) {
     super(props);
@@ -132,5 +131,4 @@ export default class StayScrolled extends Component {
 
     return createElement(component, props, children);
   }
-
 }

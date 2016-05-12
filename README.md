@@ -94,11 +94,11 @@ class Messages extends Component {
 
     return (
       <StayScrolled Velocity={Velocity} provideControllers={this.storeScrolledControllers}>
-        {
-          messages.map(
-            (message, i) => <Message key={i} text={message} />
-          )
-        }
+      {
+        messages.map(
+          (message, i) => <Message key={i} text={message} />
+        )
+      }
       </StayScrolled>
     );
   }
