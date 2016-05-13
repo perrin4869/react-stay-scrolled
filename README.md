@@ -30,11 +30,11 @@ import Message from './message.jsx';
 
 const Messages = ({ messages }) => (
   <StayScrolled component="div">
-    {
-      messages.map(
-        (message, i) => <Message key={i} text={message} />
-      )
-    }
+  {
+    messages.map(
+      (message, i) => <Message key={i} text={message} />
+    )
+  }
   </StayScrolled>
 );
 
@@ -138,12 +138,13 @@ class Messages extends Component {
         <StayScrolled
           component="div"
           onStayScrolled={this.onStayScrolled}
-          onScrolled={this.onScrolled}>
-          {
-            messages.map(
-              (message, i) => <Message key={i} text={message} />
-            )
-          }
+          onScrolled={this.onScrolled}
+        >
+        {
+          messages.map(
+            (message, i) => <Message key={i} text={message} />
+          )
+        }
         </StayScrolled>
         { notifyNewMessage && <div>Scroll down to new message</div> }
       </div>
@@ -237,8 +238,6 @@ Injects the above controllers, `stayScrolled` and `scrollBottom` to the props of
 * Try to automate scrolling on some of the use-cases
 * Support jQuery for animation
 * Improve examples
-* Improve documentation with tables, etc
-* Test
 
 ## License
 
