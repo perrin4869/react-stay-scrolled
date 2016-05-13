@@ -55,9 +55,9 @@ export default class StayScrolled extends Component {
   }
 
   onScroll = () => {
-    this.wasScrolled = this.isScrolled();
+    const isScrolled = this.wasScrolled = this.isScrolled();
 
-    if (this.wasScrolled && this.props.onScrolled) {
+    if (isScrolled && this.props.onScrolled) {
       this.props.onScrolled();
     }
   }
