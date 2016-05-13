@@ -9,7 +9,7 @@ function isScrolled(node) {
   return node.scrollHeight === node.clientHeight + node.scrollTop;
 }
 
-describe('react-focus-onkeydown', () => {
+describe('react-stay-scrolled', () => {
   let container;
 
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('react-focus-onkeydown', () => {
     document.body.removeChild(container);
   });
 
-  it('should render single input', () => {
+  it('should render single div', () => {
     ReactDOM.render(<StayScrolled />, container);
     container.childNodes.length.should.equal(1);
     container.firstChild.tagName.should.equal('DIV');
@@ -55,6 +55,6 @@ describe('react-focus-onkeydown', () => {
       <StayScrolled provideControllers={controllers => { scrollBottom = controllers.scrollBottom; }} onScrolled={spy} />,
       container);
     scrollBottom();
-    spy.calledTwice.should.equal(true);
+    spy.calledTwice.should.equal(true); // Once because of startScrolled, twice because scrollBottom
   });
 });
