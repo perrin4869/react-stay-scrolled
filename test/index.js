@@ -1,16 +1,25 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import Velocity from 'velocity-animate';
 
 import StayScrolled, { scrolled } from '../src';
+import { maxScrollTop } from '../src/util.js';
 
-chai.should();
 const { expect } = chai;
 
-function isScrolled(node) {
-  return node.scrollHeight === node.clientHeight + node.scrollTop;
-}
-
 describe('react-stay-scrolled', () => {
+  const testHeight = 30;
+  const testScrollHeight = 100;
+  const TestComponent = props => (
+    <StayScrolled {...props} style={{ height: testHeight, width: 100, overflow: 'auto' }}>
+      <div style={{ height: testScrollHeight, width: 100 }} />
+    </StayScrolled>
+  );
+
+  function isScrolled(node) {
+    return node.scrollTop === maxScrollTop(node);
+  }
+
   let container;
 
   beforeEach(() => {
@@ -22,49 +31,297 @@ describe('react-stay-scrolled', () => {
     document.body.removeChild(container);
   });
 
-  describe('StayScrolled', () => {
+  describe('general', () => {
     it('should render single div', () => {
       ReactDOM.render(<StayScrolled />, container);
-      container.childNodes.length.should.equal(1);
-      container.firstChild.tagName.should.equal('DIV');
+      expect(container.childNodes.length).to.equal(1);
+      expect(container.firstChild.tagName).to.equal('DIV');
     });
 
     it('should start with scrolled element', () => {
-      ReactDOM.render(
-        <StayScrolled style={{ height: 100, width: 100, overflow: 'auto' }}>
-          <div style={{ height: 300, width: 100 }} />
-        </StayScrolled>,
-        container);
-      container.firstChild.scrollHeight.should.equal(300);
-      isScrolled(container.firstChild).should.equal(true);
+      ReactDOM.render(<TestComponent />, container);
+
+      expect(container.firstChild.scrollHeight).to.equal(testScrollHeight);
+      expect(isScrolled(container.firstChild)).to.equal(true);
+    });
+
+    it('should not call onScrolled when using startScrolled', () => {
+      const spy = sinon.spy();
+
+      ReactDOM.render(<TestComponent startScrolled onScrolled={spy} />, container);
+
+      expect(spy.called).to.equal(false);
     });
 
     it('should not start with scrolled element', () => {
-      ReactDOM.render(
-        <StayScrolled startScrolled={false} style={{ height: 100, width: 100, overflow: 'auto' }}>
-          <div style={{ height: 300, width: 100 }} />
-        </StayScrolled>,
-        container);
-      container.firstChild.scrollHeight.should.equal(300);
-      container.firstChild.scrollTop.should.equal(0);
-      isScrolled(container.firstChild).should.equal(false);
+      ReactDOM.render(<TestComponent startScrolled={false} />, container);
+
+      expect(container.firstChild.scrollTop).to.equal(0);
+      expect(isScrolled(container.firstChild)).to.equal(false);
     });
 
     it('should fire onScrolled when calling scrollBottom control', () => {
       let scrollBottom;
-      const spy = sinon.spy();
-      ReactDOM.render(
-        <StayScrolled provideControllers={controllers => { scrollBottom = controllers.scrollBottom; }} onScrolled={spy} />,
-          container);
+      const storeController = controllers => { scrollBottom = controllers.scrollBottom; };
+
+      return new Promise(resolve => {
+        ReactDOM.render(<TestComponent provideControllers={storeController} onScrolled={() => resolve()} />, container);
+        scrollBottom();
+      });
+    });
+
+    it('should scroll to bottom when calling scrollBottom', () => {
+      let scrollBottom;
+      const storeController = controllers => { scrollBottom = controllers.scrollBottom; };
+
+      ReactDOM.render(<TestComponent startScrolled={false} provideControllers={storeController} />, container);
+
+      expect(isScrolled(container.firstChild)).to.equal(false);
       scrollBottom();
-      spy.calledTwice.should.equal(true); // Once because of startScrolled, twice because scrollBottom
+      expect(isScrolled(container.firstChild)).to.equal(true);
+    });
+
+    it('should stay scrolled when calling stayScrolled with startScrolled', () => {
+      let stayScrolled;
+      const onStayScrolled = sinon.spy();
+      const storeController = controllers => { stayScrolled = controllers.stayScrolled; };
+
+      return new Promise(resolve => {
+        ReactDOM.render(
+          <TestComponent
+            onScrolled={() => resolve()}
+            onStayScrolled={onStayScrolled}
+            provideControllers={storeController}
+          />,
+          container
+        );
+
+        stayScrolled();
+      })
+      .then(() => {
+        expect(onStayScrolled.calledOnce).to.equal(true);
+        expect(onStayScrolled.firstCall.args).to.deep.equal([true]);
+        expect(isScrolled(container.firstChild)).to.equal(true);
+      });
+    });
+
+    it('should not stay scrolled when calling stayScrolled with startScrolled = false', () => {
+      let stayScrolled;
+      const onScrolled = sinon.spy();
+      const onStayScrolled = sinon.spy();
+      const storeController = controllers => { stayScrolled = controllers.stayScrolled; };
+
+      ReactDOM.render(
+        <TestComponent
+          startScrolled={false}
+          onScrolled={onScrolled}
+          onStayScrolled={onStayScrolled}
+          provideControllers={storeController}
+        />,
+        container
+      );
+
+      stayScrolled();
+      expect(onScrolled.called).to.equal(false);
+      expect(onStayScrolled.calledOnce).to.equal(true);
+      expect(onStayScrolled.firstCall.args).to.deep.equal([false]);
+      expect(isScrolled(container.firstChild)).to.equal(false);
+    });
+
+    it('should not notify stay scrolled when calling with notify = false', () => {
+      let stayScrolled;
+      const onStayScrolled = sinon.spy();
+      const storeController = controllers => { stayScrolled = controllers.stayScrolled; };
+
+      ReactDOM.render(
+        <TestComponent
+          onStayScrolled={onStayScrolled}
+          provideControllers={storeController}
+        />,
+        container
+      );
+
+      stayScrolled(false);
+      expect(onStayScrolled.called).to.equal(false);
+    });
+
+    it('should stay scrolled when adding new elements', done => {
+      class Messages extends Component {
+        state = { messages: [] }
+
+        componentDidMount() {
+          this.addMessage();
+        }
+
+        onStayScrolled = (...args) => {
+          expect(args).to.deep.equal([true]);
+          expect(isScrolled(this.dom)).to.equal(true);
+
+          if (this.state.messages.length > 4) {
+            done(); // After 5 messages stop
+          } else {
+            this.addMessage();
+          }
+        }
+
+        storeControls = ({ stayScrolled }) => {
+          this.stayScrolled = stayScrolled;
+        }
+
+        storeDom = c => {
+          this.dom = ReactDOM.findDOMNode(c);
+        }
+
+        addMessage = () => {
+          this.setState({
+            messages: [
+              ...this.state.messages,
+              'foo',
+            ],
+          }, () => {
+            this.stayScrolled();
+          });
+        }
+
+        render() {
+          return (
+            <StayScrolled
+              style={{ height: testHeight, width: 100, overflow: 'auto' }}
+              onStayScrolled={this.onStayScrolled}
+              provideControllers={this.storeControls}
+              ref={this.storeDom}
+            >
+            {
+              this.state.messages.map((message, i) => (
+                <div key={i} style={{ height: testScrollHeight, width: 100 }}>{message}</div>
+              ))
+            }
+            </StayScrolled>
+          );
+        }
+      }
+
+      ReactDOM.render(<Messages />, container);
     });
   });
 
-  describe('HOC', () => {
+  describe('accuracy', () => {
+    it('should stay scrolled only when below inaccuracy', done => {
+      const inaccuracy = 5;
+
+      const recursion = (i) => {
+        let stayScrolled;
+        const onStayScrolled = sinon.spy();
+        const storeController = controllers => { stayScrolled = controllers.stayScrolled; };
+        const onScroll = () => {
+          const dom = container.firstChild;
+          const domMaxScrollTop = maxScrollTop(dom);
+          const expectedResult = i >= domMaxScrollTop - inaccuracy;
+
+          stayScrolled();
+
+          expect(onStayScrolled.calledOnce).to.equal(true);
+          expect(onStayScrolled.firstCall.args).to.deep.equal([expectedResult]);
+          expect(isScrolled(dom)).to.equal(expectedResult);
+
+          ReactDOM.unmountComponentAtNode(container);
+          if (i < domMaxScrollTop) {
+            recursion(i + 1);
+          } else {
+            done();
+          }
+        };
+
+        ReactDOM.render(
+          <TestComponent
+            startScrolled={false}
+            stayInaccuracy={inaccuracy}
+            onScroll={onScroll}
+            onStayScrolled={onStayScrolled}
+            provideControllers={storeController}
+          />,
+          container
+        );
+
+        const dom = container.firstChild;
+        dom.scrollTop = i;
+      };
+
+      recursion(1);
+    });
+  });
+
+  describe('animation', () => {
+    it('should animate scrolling with velocity', () => {
+      let scrollBottom;
+      let lastScrollTop = 0;
+      const duration = 300;
+      const storeController = controllers => { scrollBottom = controllers.scrollBottom; };
+      const onScroll = sinon.spy(() => {
+        expect(container.firstChild.scrollTop).to.be.above(lastScrollTop);
+        expect(container.firstChild.scrollTop).to.be.most(maxScrollTop(container.firstChild));
+        lastScrollTop = container.firstChild.scrollTop;
+      });
+
+      ReactDOM.render(
+        <TestComponent
+          Velocity={Velocity}
+          startScrolled={false}
+          onScroll={onScroll}
+          provideControllers={storeController}
+        />,
+        container
+      );
+
+      expect(isScrolled(container.firstChild)).to.equal(false);
+      scrollBottom();
+
+      return new Promise(resolve => {
+        setTimeout(() => {
+          expect(onScroll.callCount).to.be.above(8);
+          expect(isScrolled(container.firstChild)).to.equal(true);
+          resolve();
+        }, duration);
+      });
+    });
+
+    it('should call onScrolled when using velocity', () => {
+      let scrollBottom;
+      const duration = 300;
+      const spy = sinon.spy();
+      const storeController = controllers => { scrollBottom = controllers.scrollBottom; };
+      const onScroll = sinon.spy(() => {
+        expect(spy.called).to.equal(false);
+      });
+
+      ReactDOM.render(
+        <TestComponent
+          Velocity={Velocity}
+          onScroll={onScroll}
+          startScrolled={false}
+          onScrolled={spy}
+          provideControllers={storeController}
+        />,
+        container
+      );
+
+      expect(spy.called).to.equal(false);
+      scrollBottom();
+
+      return new Promise(resolve => {
+        setTimeout(() => {
+          expect(onScroll.callCount).to.be.above(8);
+          expect(spy.called).to.equal(true);
+          resolve();
+        }, duration);
+      });
+    });
+  });
+
+  describe('hoc', () => {
     it('should use correct displayName', () => {
       const ScrolledDiv = scrolled('div');
-      ScrolledDiv.displayName.should.equal('scrolled(div)');
+      expect(ScrolledDiv.displayName).to.equal('scrolled(div)');
     });
 
     it('should provide controls to children', () => {
@@ -84,7 +341,8 @@ describe('react-stay-scrolled', () => {
         <StayScrolled>
           <ScrolledChildComponent />
         </StayScrolled>,
-        container);
+        container
+      );
     });
   });
 });

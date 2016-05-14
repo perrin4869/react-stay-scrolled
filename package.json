@@ -60,6 +60,7 @@
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "sinon": "^1.17.4",
+    "velocity-animate": "^1.2.3",
     "webpack": "^1.13.0"
   },
   "peerDependencies": {

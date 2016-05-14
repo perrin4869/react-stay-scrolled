@@ -1,12 +1,17 @@
 import { PropTypes, Component, createElement } from 'react';
 import ReactDOM from 'react-dom';
 
+import { maxScrollTop } from './util.js';
+
+const noop = () => {};
+
 export default class StayScrolled extends Component {
   static propTypes = {
     component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.element]),
     children: PropTypes.node,
     startScrolled: PropTypes.bool,
     onStayScrolled: PropTypes.func,
+    onScroll: PropTypes.func,
     onScrolled: PropTypes.func,
     stayInaccuracy: PropTypes.number,
     provideControllers: PropTypes.func,
@@ -18,18 +23,15 @@ export default class StayScrolled extends Component {
     component: 'div',
     startScrolled: true,
     stayInaccuracy: 0,
-    debug: () => {},
+    onScroll: noop,
+    onScrolled: noop,
+    onStayScrolled: noop,
+    debug: noop,
   }
 
   static childContextTypes = {
     scrollBottom: PropTypes.func,
     stayScrolled: PropTypes.func,
-  }
-
-  constructor(props) {
-    super(props);
-
-    this.wasScrolled = props.startScrolled;
   }
 
   getChildContext() {
@@ -42,8 +44,10 @@ export default class StayScrolled extends Component {
   componentDidMount() {
     const { startScrolled, provideControllers } = this.props;
 
+    this.wasScrolled = startScrolled || this.isScrolled();
+
     if (startScrolled) {
-      this.scrollBottom();
+      this.scrollBottom(false);
     }
 
     if (provideControllers) {
@@ -56,26 +60,25 @@ export default class StayScrolled extends Component {
 
   onScroll = () => {
     const isScrolled = this.wasScrolled = this.isScrolled();
+    const { onScroll, onScrolled } = this.props;
 
-    if (isScrolled && this.props.onScrolled) {
-      this.props.onScrolled();
+    onScroll();
+    if (isScrolled) {
+      onScrolled();
     }
   }
 
   getDOM = () => ReactDOM.findDOMNode(this.dom)
 
-  storeDOM = (dom) => { this.dom = dom; }
+  storeDOM = dom => { this.dom = dom; }
 
   isScrolled() {
-    const { stayInaccuracy, debug } = this.props;
     const dom = this.getDOM();
-    const { scrollTop, clientHeight, scrollHeight } = dom;
-
-    debug(`isScrolled: scollTop=${scrollTop}, clientHeight=${clientHeight}, scrollHeight=${scrollHeight}`);
+    const { stayInaccuracy } = this.props;
 
     // scrollTop is a floating point, the rest are integers rounded up
     // naively: actualScrollHeight = scrollHeight - (Math.ceil(scrollTop) - scrollTop)
-    return Math.ceil(scrollTop) + clientHeight >= (scrollHeight) - stayInaccuracy;
+    return Math.ceil(dom.scrollTop) >= maxScrollTop(dom) - stayInaccuracy;
   }
 
   stayScrolled = (notify = true) => {
@@ -85,16 +88,14 @@ export default class StayScrolled extends Component {
       this.scrollBottom();
     }
 
-    if (notify && onStayScrolled) {
+    if (notify) {
       onStayScrolled(this.wasScrolled);
     }
   }
 
   scrollBottom = () => {
-    const { Velocity, onScrolled, debug } = this.props;
+    const { Velocity, debug } = this.props;
     const dom = this.getDOM();
-
-    if (!dom) return; // Necessary in case this method is called before the component rendered
 
     const { scrollHeight } = dom;
 
@@ -109,24 +110,19 @@ export default class StayScrolled extends Component {
           offset: scrollHeight,
           duration: 300,
           easing: 'ease-out',
-          complete: onScrolled,
         }
       );
     } else {
       dom.scrollTop = scrollHeight;
-
-      if (onScrolled) {
-        onScrolled();
-      }
     }
   }
 
   render() {
     const { component, children, ...rest } = this.props;
     const props = {
+      ...rest,
       ref: this.storeDOM,
       onScroll: this.onScroll,
-      ...rest,
     };
 
     return createElement(component, props, children);
