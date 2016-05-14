@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
+import jQuery from 'jquery';
 
 import StayScrolled, { scrolled } from '../src';
 import { maxScrollTop } from '../src/util.js';
@@ -252,7 +253,7 @@ describe('react-stay-scrolled', () => {
   });
 
   describe('animation', () => {
-    it('should animate scrolling with velocity', () => {
+    const testAnimation = props => {
       let scrollBottom;
       let lastScrollTop = 0;
       const duration = 300;
@@ -265,10 +266,10 @@ describe('react-stay-scrolled', () => {
 
       ReactDOM.render(
         <TestComponent
-          Velocity={Velocity}
           startScrolled={false}
           onScroll={onScroll}
           provideControllers={storeController}
+          {...props}
         />,
         container
       );
@@ -283,9 +284,9 @@ describe('react-stay-scrolled', () => {
           resolve();
         }, duration);
       });
-    });
+    };
 
-    it('should call onScrolled when using velocity', () => {
+    const testAnimationOnScrolled = props => {
       let scrollBottom;
       const duration = 300;
       const spy = sinon.spy();
@@ -296,11 +297,11 @@ describe('react-stay-scrolled', () => {
 
       ReactDOM.render(
         <TestComponent
-          Velocity={Velocity}
           onScroll={onScroll}
           startScrolled={false}
           onScrolled={spy}
           provideControllers={storeController}
+          {...props}
         />,
         container
       );
@@ -313,9 +314,14 @@ describe('react-stay-scrolled', () => {
           expect(onScroll.callCount).to.be.above(8);
           expect(spy.called).to.equal(true);
           resolve();
-        }, duration);
+        }, duration * 1.5); // jQuery needs extra time, guarantee completion with 1.5 times the duration
       });
-    });
+    };
+
+    it('should animate scrolling with velocity', () => testAnimation({ Velocity }));
+    it('should call onScrolled when using velocity', () => testAnimationOnScrolled({ Velocity }));
+    it('should animate scrolling with jquery', () => testAnimation({ jQuery }));
+    it('should call onScrolled when using jquery', () => testAnimationOnScrolled({ jQuery }));
   });
 
   describe('hoc', () => {

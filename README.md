@@ -185,6 +185,12 @@ Type: `function` optional, default: `null`
 
 If passed, scroll will be performed with a smooth animation powered by the [Velocity](https://github.com/julianshapiro/velocity) instance passed
 
+### jQuery
+
+Type: `function` optional, default: `null`
+
+If passed, scroll will be performed with a smooth animation powered by the [jQuery](https://jquery.com/) instance passed
+
 ### onStayScrolled
 
 Type: `function(scrolled)`
@@ -236,7 +242,6 @@ Injects the above controllers, `stayScrolled` and `scrollBottom` to the props of
 ## TODO
 
 * Try to automate scrolling on some of the use-cases
-* Support jQuery for animation
 * Improve examples
 
 ## License
