@@ -71,11 +71,6 @@
     "react-display-name": "^0.2.0"
   },
   "jspm": {
-    "registry": "npm",
-    "files": [
-      "lib",
-      "LICENSE.md",
-      "README.md"
-    ]
+    "registry": "npm"
   }
 }
