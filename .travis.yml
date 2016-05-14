@@ -1,17 +1,17 @@
 language: node_js
 node_js:
-  - "6"
-  - "4"
+- '6'
+- '4'
 deploy:
   api_key:
-    secure: INA0IAOLjunhFt0IMHx/z5mM78wahMntGaEl3RlU4fJW0QSApNeoyyKVFAAoX7cvNQv2czoWDpZobDVp0mfKDwFNiK3Nt2EctlMzWJvSZa36aK5vt3tjfduDdHvAPvKAdNwJHcOANL7nc5euFlw9Rm0LJD85yV+aM0SdoT2CIkP/oepieZHKCSIPYmRM1SZwvpfKHP3kAzNbz8Xl0iOF85mLmNz40/2xThzjjKDPCv2aF1e+O/GgNqYurod62OO1Rs6OWooDLimvP7NdyD+JrlqWsv1vuf3hUtwBi+nmFQxT6/4PDTv0TptNQbPEBojjJjb10BYNvzrrKoQ+JwGM78/3Adqd+m0EvT00AL3cLcYzt7iQTuAief40lwo59b+XzGOERvDEFjT7Xns/G8jWwwFuZ+F0Ejg/hMy76ZmnoNn9MjzLQeLrJwmTtcOM9d247GAxPZcvQaPUBz2W28TwpCp1HU8u8nvDQpVhmi1Ke3FHWwhPpBU4uXT5/7inukha4fPiiTC16UY8aMg9CKEVPma4EaDcgZzCWzYGeWDYA2hUpEDYNhfCA6nasgOry8f7cEFMr6sKy9Sx4vowPhsuYYUYryeyDAyPhthnWQ3ldFgIlm7C2jSU6nSYv2vegVw+uDcyTqA9AYJiksfhnAzLpMEsEt4ExJFCx07UE/HhqRw=
+    secure: sg4ngTmLGfE7YA46aFkiyYo2TwJuaeQolIFFBKSQtyV2KKo6y1S0Dau9YmqCrcwddqy4abyQD8dV5C1sqSWJHCNS2NTr2t/P5D0fNTOHuqJoKEgXpxXvcpDsoUzdip5B9QpNF94TEN4zaD/uxHazjDmqM1s2GmYO84VR5RxBuHAbjTFSzQPYf+TPXGNYjG9epVryiKKkRgWSBBtY1U+9V7wJw0xjpKRjyjsDTlbnCFqaLZd9LxmXUVgS2hTt8DdUi6T01BOZdrjav4nMr1ZWI1yLv35HReyY6EVusQszfo3CcDy/ZEdp9lCUY/cuh0Oj7U+Xp9Zjgwi83Mj8z2gq308jIIDo/SpKsXGdczC29TvxrlJjr/Kg5tjGtnA/FYSmpy7WR2D0Rgd5qNhxOsUfE3lmIj3Cb64bOdjY8e9cgFbrStE2cWmLXA5ARwOEz0Zh5bhhOlOvwTwxIH+Eua5eY2z7nyXTo3uPC/BsssvE5KL/yiPGqdAShZytp1PLSVLMiF1CjApE2+zX+sH8msXcwvRcEkpURlgrUSd6lHKt7pIe8hMD0Zm2uaQDHAqdhsmFy85s/g6zKrpilUe3VFbqfjT3Mok8+vyyDMVDphgD49Xh/rbHOot6lJsV7n1Dtt1erfVdyzCQKXRlzl9imhqUdHWG9gmUTMd1sGOejfhzy1I=
   email: julian@dotcore.co.il
   provider: npm
   on:
     tags: true
 before_install:
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - npm install -g gulp
+- export CHROME_BIN=chromium-browser
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- npm install -g gulp
 script: gulp
