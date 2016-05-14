@@ -253,15 +253,14 @@ describe('react-stay-scrolled', () => {
   });
 
   describe('animation', () => {
+    const duration = 100;
+
     const testAnimation = props => {
       let scrollBottom;
-      let lastScrollTop = 0;
-      const duration = 300;
       const storeController = controllers => { scrollBottom = controllers.scrollBottom; };
       const onScroll = sinon.spy(() => {
-        expect(container.firstChild.scrollTop).to.be.above(lastScrollTop);
+        expect(container.firstChild.scrollTop).to.be.above(0);
         expect(container.firstChild.scrollTop).to.be.most(maxScrollTop(container.firstChild));
-        lastScrollTop = container.firstChild.scrollTop;
       });
 
       ReactDOM.render(
@@ -269,6 +268,7 @@ describe('react-stay-scrolled', () => {
           startScrolled={false}
           onScroll={onScroll}
           provideControllers={storeController}
+          duration={duration}
           {...props}
         />,
         container
@@ -279,16 +279,15 @@ describe('react-stay-scrolled', () => {
 
       return new Promise(resolve => {
         setTimeout(() => {
-          expect(onScroll.callCount).to.be.above(8);
+          expect(onScroll.callCount).to.be.above(4);
           expect(isScrolled(container.firstChild)).to.equal(true);
           resolve();
-        }, duration);
+        }, duration * 1.5);
       });
     };
 
     const testAnimationOnScrolled = props => {
       let scrollBottom;
-      const duration = 300;
       const spy = sinon.spy();
       const storeController = controllers => { scrollBottom = controllers.scrollBottom; };
       const onScroll = sinon.spy(() => {
@@ -301,6 +300,7 @@ describe('react-stay-scrolled', () => {
           startScrolled={false}
           onScrolled={spy}
           provideControllers={storeController}
+          duration={duration}
           {...props}
         />,
         container
@@ -311,7 +311,7 @@ describe('react-stay-scrolled', () => {
 
       return new Promise(resolve => {
         setTimeout(() => {
-          expect(onScroll.callCount).to.be.above(8);
+          expect(onScroll.callCount).to.be.above(4);
           expect(spy.called).to.equal(true);
           resolve();
         }, duration * 1.5); // jQuery needs extra time, guarantee completion with 1.5 times the duration

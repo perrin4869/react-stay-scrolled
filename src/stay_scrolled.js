@@ -17,6 +17,8 @@ export default class StayScrolled extends Component {
     provideControllers: PropTypes.func,
     Velocity: PropTypes.func,
     jQuery: PropTypes.func,
+    duration: PropTypes.number,
+    easing: PropTypes.string,
     debug: PropTypes.func,
   }
 
@@ -27,6 +29,8 @@ export default class StayScrolled extends Component {
     onScroll: noop,
     onScrolled: noop,
     onStayScrolled: noop,
+    duration: 300,
+    easing: 'linear',
     debug: noop,
   }
 
@@ -95,10 +99,15 @@ export default class StayScrolled extends Component {
   }
 
   scrollBottom = () => {
-    const { Velocity, jQuery, debug } = this.props;
     const dom = this.getDOM();
-    const duration = 300;
     const offset = maxScrollTop(dom);
+    const {
+      Velocity,
+      jQuery,
+      duration,
+      easing,
+      debug,
+    } = this.props;
 
     debug(`Scrolling bottom: scrollOffset=${offset}`);
 
@@ -108,13 +117,13 @@ export default class StayScrolled extends Component {
         'scroll',
         {
           container: dom,
-          easing: 'ease-out',
+          easing,
           duration,
           offset,
         }
       );
     } else if (jQuery) {
-      jQuery(dom).animate({ scrollTop: offset }, duration);
+      jQuery(dom).animate({ scrollTop: offset }, duration, easing);
     } else {
       dom.scrollTop = offset;
     }

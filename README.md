@@ -191,6 +191,18 @@ Type: `function` optional, default: `null`
 
 If passed, scroll will be performed with a smooth animation powered by the [jQuery](https://jquery.com/) instance passed
 
+### duration
+
+Type: `number` optional, default: 300
+
+Argument passed to `Velocity` or `jQuery` for animation duration
+
+### easing
+
+Type: `any` optional, default: `linear`
+
+Argument passed to `Velocity` or `jQuery` for animation easing
+
 ### onStayScrolled
 
 Type: `function(scrolled)`
