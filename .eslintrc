@@ -1,14 +1,6 @@
 {
   "extends": "airbnb",
-
   "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-    },
-  },
-
   "rules": {
     "max-len": ["error", 150],
     "new-cap": [2, {
