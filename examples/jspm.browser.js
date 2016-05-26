@@ -1,9 +1,8 @@
 SystemJS.config({
-  baseURL: "./",
+  baseURL: ".",
   paths: {
-    "github:*": "jspm_packages/github/*",
-    "local:*": "jspm_packages/local/*",
-    "npm:*": "jspm_packages/npm/*",
-    "react-stay-scrolled-demo/": "src/"
+    "github:": "jspm_packages/github/",
+    "local:": "jspm_packages/local/",
+    "npm:": "jspm_packages/npm/"
   }
 });
