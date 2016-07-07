@@ -46,7 +46,7 @@
     "gulp-eslint": "^2.0.0",
     "isparta-loader": "^2.0.0",
     "jquery": "^2.2.4",
-    "karma": "^0.13.22",
+    "karma": "^1.1.1",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.0.0",
