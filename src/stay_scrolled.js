@@ -130,7 +130,22 @@ export default class StayScrolled extends Component {
   }
 
   render() {
-    const { component, children, ...rest } = this.props;
+    const {
+      component,
+      children,
+      startScrolled, // eslint-disable-line no-unused-vars
+      onStayScrolled, // eslint-disable-line no-unused-vars
+      onScroll, // eslint-disable-line no-unused-vars
+      onScrolled, // eslint-disable-line no-unused-vars
+      stayInaccuracy, // eslint-disable-line no-unused-vars
+      provideControllers, // eslint-disable-line no-unused-vars
+      Velocity, // eslint-disable-line no-unused-vars
+      jQuery, // eslint-disable-line no-unused-vars
+      duration, // eslint-disable-line no-unused-vars
+      easing, // eslint-disable-line no-unused-vars
+      debug, // eslint-disable-line no-unused-vars
+      ...rest,
+    } = this.props;
     const props = {
       ...rest,
       ref: this.storeDOM,
