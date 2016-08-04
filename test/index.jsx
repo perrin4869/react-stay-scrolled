@@ -169,8 +169,8 @@ describe('react-stay-scrolled', () => {
           this.stayScrolled = stayScrolled;
         }
 
-        storeDom = c => {
-          this.dom = ReactDOM.findDOMNode(c);
+        storeDOM = dom => {
+          this.dom = dom;
         }
 
         addMessage = () => {
@@ -190,7 +190,7 @@ describe('react-stay-scrolled', () => {
               style={{ height: testHeight, width: 100, overflow: 'auto' }}
               onStayScrolled={this.onStayScrolled}
               provideControllers={this.storeControls}
-              ref={this.storeDom}
+              _provideDOMNode={this.storeDOM}
             >
             {
               this.state.messages.map((message, i) => (
@@ -334,7 +334,7 @@ describe('react-stay-scrolled', () => {
       const ChildComponent = ({ scrollBottom, stayScrolled }) => {
         expect(typeof scrollBottom === 'function').to.equal(true);
         expect(typeof stayScrolled === 'function').to.equal(true);
-        return <div></div>;
+        return <div />;
       };
       ChildComponent.propTypes = {
         scrollBottom: PropTypes.func,

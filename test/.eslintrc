@@ -1,10 +1,15 @@
 {
   "env": {
-    "mocha": true
+    "mocha": true,
+    "browser": true
   },
 
   "globals": {
     "chai": true,
     "sinon": true
+  },
+
+  "rules": {
+    "import/no-extraneous-dependencies": [2, {"devDependencies": true}]
   }
 }

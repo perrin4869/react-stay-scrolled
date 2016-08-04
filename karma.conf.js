@@ -15,7 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/*.js'
+      'test/*.js?(x)'
     ],
 
 
@@ -27,7 +27,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/*.js': ['webpack', 'sourcemap'],
+      'test/*.js?(x)': ['webpack', 'sourcemap'],
       'src/*.js': ['webpack', 'sourcemap', 'coverage']
     },
 
@@ -82,7 +82,7 @@ module.exports = function(config) {
             loader: 'isparta'
         }],
         loaders: [{
-          test: /\.(js|jsx)$/,
+          test: /\.js?(x)$/,
           exclude: /node_modules\//,
           loader: 'babel-loader'
         }]

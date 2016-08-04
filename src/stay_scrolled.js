@@ -1,6 +1,4 @@
 import { PropTypes, Component, createElement } from 'react';
-import ReactDOM from 'react-dom';
-
 import { maxScrollTop } from './util.js';
 
 const noop = () => {};
@@ -20,6 +18,7 @@ export default class StayScrolled extends Component {
     duration: PropTypes.number,
     easing: PropTypes.string,
     debug: PropTypes.func,
+    _provideDOMNode: PropTypes.func, // for testing only, don't use findDOMNode
   }
 
   static defaultProps = {
@@ -73,17 +72,22 @@ export default class StayScrolled extends Component {
     }
   }
 
-  getDOM = () => ReactDOM.findDOMNode(this.dom)
+  storeDOM = dom => {
+    const { _provideDOMNode } = this.props;
 
-  storeDOM = dom => { this.dom = dom; }
+    this.dom = dom;
+
+    if (typeof _provideDOMNode === 'function') {
+      _provideDOMNode(dom);
+    }
+  }
 
   isScrolled() {
-    const dom = this.getDOM();
     const { stayInaccuracy } = this.props;
 
     // scrollTop is a floating point, the rest are integers rounded up
     // naively: actualScrollHeight = scrollHeight - (Math.ceil(scrollTop) - scrollTop)
-    return Math.ceil(dom.scrollTop) >= maxScrollTop(dom) - stayInaccuracy;
+    return Math.ceil(this.dom.scrollTop) >= maxScrollTop(this.dom) - stayInaccuracy;
   }
 
   stayScrolled = (notify = true) => {
@@ -99,8 +103,7 @@ export default class StayScrolled extends Component {
   }
 
   scrollBottom = () => {
-    const dom = this.getDOM();
-    const offset = maxScrollTop(dom);
+    const offset = maxScrollTop(this.dom);
     const {
       Velocity,
       jQuery,
@@ -113,19 +116,19 @@ export default class StayScrolled extends Component {
 
     if (Velocity) { // Use smooth scrolling if available
       Velocity(
-        dom.firstChild,
+        this.dom.firstChild,
         'scroll',
         {
-          container: dom,
+          container: this.dom,
           easing,
           duration,
           offset,
         }
       );
     } else if (jQuery) {
-      jQuery(dom).animate({ scrollTop: offset }, duration, easing);
+      jQuery(this.dom).animate({ scrollTop: offset }, duration, easing);
     } else {
-      dom.scrollTop = offset;
+      this.dom.scrollTop = offset;
     }
   }
 
@@ -144,6 +147,7 @@ export default class StayScrolled extends Component {
       duration, // eslint-disable-line no-unused-vars
       easing, // eslint-disable-line no-unused-vars
       debug, // eslint-disable-line no-unused-vars
+      _provideDOMNode, // eslint-disable-line no-unused-vars
       ...rest,
     } = this.props;
     const props = {
