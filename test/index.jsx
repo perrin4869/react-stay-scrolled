@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Velocity from 'velocity-animate';
 import jQuery from 'jquery';
+import dynamics from 'dynamics.js';
+import { expect } from 'chai';
 
 import StayScrolled, { scrolled } from '../src';
 import { maxScrollTop } from '../src/util.js';
-
-const { expect } = chai;
 
 describe('react-stay-scrolled', () => {
   const testHeight = 30;
@@ -254,8 +254,35 @@ describe('react-stay-scrolled', () => {
 
   describe('animation', () => {
     const duration = 100;
+    const easing = 'linear';
 
-    const testAnimation = props => {
+    const dynamicsRunScroll = (dom, offset) => {
+      dynamics.animate(dom, {
+        scrollTop: offset,
+      }, {
+        type: dynamics[easing],
+        duration,
+      });
+    };
+
+    const jqueryRunScroll = (dom, offset) => {
+      jQuery(dom).animate({ scrollTop: offset }, duration, easing);
+    };
+
+    const velocityRunScroll = (dom, offset) => {
+      Velocity(
+        dom.firstChild,
+        'scroll',
+        {
+          container: dom,
+          easing,
+          duration,
+          offset,
+        }
+      );
+    };
+
+    const testAnimation = runScroll => {
       let scrollBottom;
       const storeController = controllers => { scrollBottom = controllers.scrollBottom; };
       const onScroll = sinon.spy(() => {
@@ -268,8 +295,7 @@ describe('react-stay-scrolled', () => {
           startScrolled={false}
           onScroll={onScroll}
           provideControllers={storeController}
-          duration={duration}
-          {...props}
+          runScroll={runScroll}
         />,
         container
       );
@@ -286,7 +312,7 @@ describe('react-stay-scrolled', () => {
       });
     };
 
-    const testAnimationOnScrolled = props => {
+    const testAnimationOnScrolled = runScroll => {
       let scrollBottom;
       const spy = sinon.spy();
       const storeController = controllers => { scrollBottom = controllers.scrollBottom; };
@@ -300,8 +326,7 @@ describe('react-stay-scrolled', () => {
           startScrolled={false}
           onScrolled={spy}
           provideControllers={storeController}
-          duration={duration}
-          {...props}
+          runScroll={runScroll}
         />,
         container
       );
@@ -318,10 +343,12 @@ describe('react-stay-scrolled', () => {
       });
     };
 
-    it('should animate scrolling with velocity', () => testAnimation({ Velocity }));
-    it('should call onScrolled when using velocity', () => testAnimationOnScrolled({ Velocity }));
-    it('should animate scrolling with jquery', () => testAnimation({ jQuery }));
-    it('should call onScrolled when using jquery', () => testAnimationOnScrolled({ jQuery }));
+    it('should animate scrolling with dynamics.js', () => testAnimation(dynamicsRunScroll));
+    it('should call onScrolled when using dynamics.js', () => testAnimationOnScrolled(dynamicsRunScroll));
+    it('should animate scrolling with velocity', () => testAnimation(velocityRunScroll));
+    it('should call onScrolled when using velocity', () => testAnimationOnScrolled(velocityRunScroll));
+    it('should animate scrolling with jquery', () => testAnimation(jqueryRunScroll));
+    it('should call onScrolled when using jquery', () => testAnimationOnScrolled(jqueryRunScroll));
   });
 
   describe('hoc', () => {

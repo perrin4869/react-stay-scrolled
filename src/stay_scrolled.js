@@ -1,5 +1,5 @@
 import { PropTypes, Component, createElement } from 'react';
-import { maxScrollTop } from './util.js';
+import { maxScrollTop, runScroll as defaultRunScroll } from './util.js';
 
 const noop = () => {};
 
@@ -11,12 +11,9 @@ export default class StayScrolled extends Component {
     onStayScrolled: PropTypes.func,
     onScroll: PropTypes.func,
     onScrolled: PropTypes.func,
+    runScroll: PropTypes.func,
     stayInaccuracy: PropTypes.number,
     provideControllers: PropTypes.func,
-    Velocity: PropTypes.func,
-    jQuery: PropTypes.func,
-    duration: PropTypes.number,
-    easing: PropTypes.string,
     debug: PropTypes.func,
     _provideDOMNode: PropTypes.func, // for testing only, don't use findDOMNode
   }
@@ -28,8 +25,7 @@ export default class StayScrolled extends Component {
     onScroll: noop,
     onScrolled: noop,
     onStayScrolled: noop,
-    duration: 300,
-    easing: 'linear',
+    runScroll: defaultRunScroll,
     debug: noop,
   }
 
@@ -104,32 +100,11 @@ export default class StayScrolled extends Component {
 
   scrollBottom = () => {
     const offset = maxScrollTop(this.dom);
-    const {
-      Velocity,
-      jQuery,
-      duration,
-      easing,
-      debug,
-    } = this.props;
+    const { runScroll, debug } = this.props;
 
     debug(`Scrolling bottom: scrollOffset=${offset}`);
 
-    if (Velocity) { // Use smooth scrolling if available
-      Velocity(
-        this.dom.firstChild,
-        'scroll',
-        {
-          container: this.dom,
-          easing,
-          duration,
-          offset,
-        }
-      );
-    } else if (jQuery) {
-      jQuery(this.dom).animate({ scrollTop: offset }, duration, easing);
-    } else {
-      this.dom.scrollTop = offset;
-    }
+    runScroll(this.dom, offset);
   }
 
   render() {
@@ -140,12 +115,9 @@ export default class StayScrolled extends Component {
       onStayScrolled, // eslint-disable-line no-unused-vars
       onScroll, // eslint-disable-line no-unused-vars
       onScrolled, // eslint-disable-line no-unused-vars
+      runScroll, // eslint-disable-line no-unused-vars
       stayInaccuracy, // eslint-disable-line no-unused-vars
       provideControllers, // eslint-disable-line no-unused-vars
-      Velocity, // eslint-disable-line no-unused-vars
-      jQuery, // eslint-disable-line no-unused-vars
-      duration, // eslint-disable-line no-unused-vars
-      easing, // eslint-disable-line no-unused-vars
       debug, // eslint-disable-line no-unused-vars
       _provideDOMNode, // eslint-disable-line no-unused-vars
       ...rest,

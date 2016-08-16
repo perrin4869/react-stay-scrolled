@@ -77,7 +77,6 @@ The methods can also be called from the parent element:
 ```javascript
 import React, { Component, PropTypes } from 'react';
 import StayScrolled from 'react-stay-scrolled';
-import Velocity from 'velocity';
 
 class Messages extends Component {
   componentDidUpdate(prevProps) {
@@ -94,7 +93,7 @@ class Messages extends Component {
     const { messages } = this.props;
 
     return (
-      <StayScrolled Velocity={Velocity} provideControllers={this.storeScrolledControllers}>
+      <StayScrolled provideControllers={this.storeScrolledControllers}>
       {
         messages.map(
           (message, i) => <Message key={i} text={message} />
@@ -179,30 +178,6 @@ Type: `function({ stayScrolled, scrollBottom })`, default: `null`
 
 Used for getting scroll controllers to the parent elements, see the controller API below
 
-### Velocity
-
-Type: `function` optional, default: `null`
-
-If passed, scroll will be performed with a smooth animation powered by the [Velocity](https://github.com/julianshapiro/velocity) instance passed
-
-### jQuery
-
-Type: `function` optional, default: `null`
-
-If passed, scroll will be performed with a smooth animation powered by the [jQuery](https://jquery.com/) instance passed
-
-### duration
-
-Type: `number` optional, default: 300
-
-Argument passed to `Velocity` or `jQuery` for animation duration
-
-### easing
-
-Type: `any` optional, default: `linear`
-
-Argument passed to `Velocity` or `jQuery` for animation easing
-
 ### onStayScrolled
 
 Type: `function(scrolled)`
@@ -220,6 +195,43 @@ True if the call to `stayScrolled` performed a scroll to bottom, false otherwise
 Type: `function()`
 
 Fires when the element scrolls down, useful to remove the new message notification
+
+### runScroll
+
+Type: `function(dom, offset)`, default: `(dom, offset) => { dom.scrollTop = offset; }`
+
+Used for animating dom scrolling. You can use [dynamic.js](http://dynamicsjs.com/), [Velocity](https://github.com/julianshapiro/velocity), [jQuery](https://jquery.com/), or your favorite animation library. Here are examples of possible, tested `runScroll` values:
+
+```js
+const easing = 'linear';
+const duration = 100;
+
+const dynamicsRunScroll = (dom, offset) => {
+  dynamics.animate(dom, {
+    scrollTop: offset,
+  }, {
+    type: dynamics[easing],
+    duration,
+  });
+};
+
+const jqueryRunScroll = (dom, offset) => {
+  jQuery(dom).animate({ scrollTop: offset }, duration, easing);
+};
+
+const velocityRunScroll = (dom, offset) => {
+  Velocity(
+    dom.firstChild,
+    'scroll',
+    {
+      container: dom,
+      easing,
+      duration,
+      offset,
+    }
+  );
+};
+```
 
 ## Controllers
 
