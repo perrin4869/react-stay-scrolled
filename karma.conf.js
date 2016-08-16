@@ -28,7 +28,6 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'test/*.js?(x)': ['webpack', 'sourcemap'],
-      'src/*.js': ['webpack', 'sourcemap', 'coverage']
     },
 
 
@@ -76,15 +75,10 @@ module.exports = function(config) {
 
     webpack: {
       module: {
-        preLoaders: [{
-          test: /\.js$/,
-          exclude: /(test|node_modules)\//,
-            loader: 'isparta'
-        }],
-        loaders: [{
-          test: /\.js?(x)$/,
+        loaders: [{ // karma start or gulp tasks need to be called with NODE_ENV=test for babel to instrument
+          test: /\.jsx?$/,
           exclude: /node_modules\//,
-          loader: 'babel-loader'
+          loader: 'babel'
         }]
       },
       devtool: 'inline-source-map'
