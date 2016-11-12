@@ -166,7 +166,7 @@ Type: `function(msg)`, default `() => {}`
 
 Used to log debug messages in StayScrolled, usually `(msg) => { console.log(msg); }`
 
-### stayAccuracy
+### stayInaccuracy
 
 Type: `number`, default: `0`
 
