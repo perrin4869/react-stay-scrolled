@@ -51,17 +51,17 @@ import { scrolled } from 'react-stay-scrolled';
 class Message extends Component {
   static propTypes = {
     stayScrolled: PropTypes.func,
-    scrollDown: PropTypes.func,
+    scrollBottom: PropTypes.func,
   }
 
   componentDidMount() {
-    const { stayScrolled, scrollDown } = this.props;
+    const { stayScrolled, scrollBottom } = this.props;
 
     // Make the parent StayScrolled component scroll down if it was already scrolled
     stayScrolled();
 
     // Make the parent StayScrolled component scroll down, even if not completely scrolled down
-    // scrollDown();
+    // scrollBottom();
   }
 
   render() {
@@ -81,7 +81,7 @@ import StayScrolled from 'react-stay-scrolled';
 class Messages extends Component {
   componentDidUpdate(prevProps) {
     if(prevProps.messages.length < this.props.messages.length)
-      this.stayScrolled(); // Or: this.scrollDown
+      this.stayScrolled(); // Or: this.scrollBottom
   }
 
   storeScrolledControllers = ({ stayScrolled, scrollBottom }) => {
