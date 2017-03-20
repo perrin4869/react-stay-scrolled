@@ -61,7 +61,7 @@
     "mocha": "^3.0.0",
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
-    "sinon": "^1.17.5",
+    "sinon": "^2.1.0",
     "velocity-animate": "^1.2.3",
     "webpack": "^1.13.1"
   },
