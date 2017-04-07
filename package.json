@@ -60,7 +60,7 @@
     "karma-webpack": "^1.7.0",
     "mocha": "^3.0.0",
     "react": "^15.3.0",
-    "react-dom": "^15.3.0",
+    "react-dom": "^15.5.0",
     "sinon": "^1.17.5",
     "velocity-animate": "^1.2.3",
     "webpack": "^1.13.1"
