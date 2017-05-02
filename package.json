@@ -49,7 +49,7 @@
     "jquery": "^3.1.0",
     "karma": "^1.1.2",
     "karma-chai": "^0.1.0",
-    "karma-chrome-launcher": "^1.0.1",
+    "karma-chrome-launcher": "^2.1.0",
     "karma-coverage": "^1.1.1",
     "karma-coveralls": "^1.1.2",
     "karma-firefox-launcher": "^1.0.0",
