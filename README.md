@@ -24,7 +24,8 @@ $ npm install --save react-stay-scrolled
 
 ```javascript
 // messages.jsx
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import StayScrolled from 'react-stay-scrolled';
 import Message from './message.jsx';
 
@@ -75,7 +76,8 @@ export default scrolled(Message);
 The methods can also be called from the parent element:
 
 ```javascript
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import StayScrolled from 'react-stay-scrolled';
 
 class Messages extends Component {
@@ -109,7 +111,8 @@ Another use case is notifying users when there is a new message down the window 
 
 ```javascript
 // messages.jsx
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import StayScrolled from 'react-stay-scrolled';
 import Message from './message.jsx';
 
