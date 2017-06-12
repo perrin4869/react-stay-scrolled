@@ -8,7 +8,7 @@
     "tdd": "NODE_ENV=test gulp tdd",
     "lint": "gulp lint",
     "build": "gulp build",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
