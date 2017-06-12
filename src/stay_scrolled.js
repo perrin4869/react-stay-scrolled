@@ -1,4 +1,5 @@
-import { PropTypes, Component, createElement } from 'react';
+import { Component, createElement } from 'react';
+import PropTypes from 'prop-types';
 import { maxScrollTop, runScroll as defaultRunScroll } from './util';
 
 const noop = () => {};
