@@ -7,7 +7,7 @@ const Server = require('karma').Server;
 const src = 'src/*.js';
 
 gulp.task('lint', () => (
-  gulp.src(src)
+  gulp.src([src, 'test/*.js?(x)'])
   .pipe(eslint())
   .pipe(eslint.format())
 ));
