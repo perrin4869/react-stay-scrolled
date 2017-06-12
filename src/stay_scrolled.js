@@ -1,5 +1,5 @@
 import { PropTypes, Component, createElement } from 'react';
-import { maxScrollTop, runScroll as defaultRunScroll } from './util.js';
+import { maxScrollTop, runScroll as defaultRunScroll } from './util';
 
 const noop = () => {};
 
@@ -19,6 +19,7 @@ export default class StayScrolled extends Component {
   }
 
   static defaultProps = {
+    children: null, // TODO
     component: 'div',
     startScrolled: true,
     stayInaccuracy: 0,
@@ -26,7 +27,9 @@ export default class StayScrolled extends Component {
     onScrolled: noop,
     onStayScrolled: noop,
     runScroll: defaultRunScroll,
+    provideControllers: noop, // TODO
     debug: noop,
+    _provideDOMNode: noop, // TODO
   }
 
   static childContextTypes = {
@@ -50,12 +53,10 @@ export default class StayScrolled extends Component {
       this.scrollBottom(false);
     }
 
-    if (provideControllers) {
-      provideControllers({
-        stayScrolled: this.stayScrolled,
-        scrollBottom: this.scrollBottom,
-      });
-    }
+    provideControllers({
+      stayScrolled: this.stayScrolled,
+      scrollBottom: this.scrollBottom,
+    });
   }
 
   onScroll = () => {
@@ -68,14 +69,10 @@ export default class StayScrolled extends Component {
     }
   }
 
-  storeDOM = dom => {
+  storeDOM = (dom) => {
     const { _provideDOMNode } = this.props;
-
+    _provideDOMNode(dom);
     this.dom = dom;
-
-    if (typeof _provideDOMNode === 'function') {
-      _provideDOMNode(dom);
-    }
   }
 
   isScrolled() {
@@ -120,7 +117,7 @@ export default class StayScrolled extends Component {
       provideControllers, // eslint-disable-line no-unused-vars
       debug, // eslint-disable-line no-unused-vars
       _provideDOMNode, // eslint-disable-line no-unused-vars
-      ...rest,
+      ...rest
     } = this.props;
     const props = {
       ...rest,
