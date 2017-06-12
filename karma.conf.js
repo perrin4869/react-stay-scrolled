@@ -75,10 +75,10 @@ module.exports = function(config) {
 
     webpack: {
       module: {
-        loaders: [{ // karma start or gulp tasks need to be called with NODE_ENV=test for babel to instrument
+        rules: [{ // karma start or gulp tasks need to be called with NODE_ENV=test for babel to instrument
           test: /\.jsx?$/,
           exclude: /node_modules\//,
-          loader: 'babel'
+          loader: 'babel-loader'
         }]
       },
       devtool: 'inline-source-map'
