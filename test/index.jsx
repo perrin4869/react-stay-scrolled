@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Velocity from 'velocity-animate';
 import jQuery from 'jquery';
 import dynamics from 'dynamics.js';
+import sinon from 'sinon';
 import { expect } from 'chai';
 
 import StayScrolled, { scrolled } from '../src';
