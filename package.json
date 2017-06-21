@@ -4,8 +4,8 @@
   "description": "React component to keep content always scrolled down",
   "main": "lib/index.js",
   "scripts": {
-    "test": "NODE_ENV=test gulp test",
-    "tdd": "NODE_ENV=test gulp tdd",
+    "test": "gulp test",
+    "tdd": "gulp tdd",
     "lint": "gulp lint",
     "build": "gulp build",
     "prepare": "npm run build"
