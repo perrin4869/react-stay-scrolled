@@ -1,9 +1,3 @@
 {
-  "presets": ["es2015", "react"],
-  "plugins": ["transform-object-rest-spread", "transform-class-properties"],
-  "env": {
-    "test": {
-      "plugins": ["istanbul"]
-    }
-  }
+  "presets": ["./.babelrc.js"],
 }
