@@ -7,9 +7,9 @@ const Server = require('karma').Server;
 const src = 'src/*.js';
 
 gulp.task('lint', () => (
-  gulp.src([src, 'test/*.js?(x)'])
-  .pipe(eslint())
-  .pipe(eslint.format())
+  gulp.src([src, 'test/*.js?(x)', 'gulpfile.js'])
+    .pipe(eslint())
+    .pipe(eslint.format())
 ));
 
 gulp.task('test', ['lint'], (done) => {
@@ -27,9 +27,9 @@ gulp.task('tdd', (done) => {
 });
 
 gulp.task('build', ['test'], () => (
-  gulp.src(src)
-  .pipe(babel())
-  .pipe(gulp.dest('lib'))
+  gulp.src([src])
+    .pipe(babel())
+    .pipe(gulp.dest('lib'))
 ));
 
 gulp.task('default', ['build']);
