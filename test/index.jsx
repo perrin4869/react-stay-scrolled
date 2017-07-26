@@ -100,8 +100,7 @@ describe('react-stay-scrolled', () => {
         );
 
         stayScrolled();
-      })
-      .then(() => {
+      }).then(() => {
         expect(onStayScrolled.calledOnce).to.equal(true);
         expect(onStayScrolled.firstCall.args).to.deep.equal([true]);
         expect(isScrolled(container.firstChild)).to.equal(true);
