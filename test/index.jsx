@@ -84,12 +84,12 @@ describe('react-stay-scrolled', () => {
       expect(isScrolled(container.firstChild)).to.equal(true);
     });
 
-    it('should stay scrolled when calling stayScrolled with startScrolled', () => {
+    it('should stay scrolled when calling stayScrolled with startScrolled', async () => {
       let stayScrolled;
       const onStayScrolled = sinon.spy();
       const storeController = (controllers) => { stayScrolled = controllers.stayScrolled; };
 
-      return new Promise((resolve) => {
+      await new Promise((resolve) => {
         ReactDOM.render(
           <TestComponent
             onScrolled={() => resolve()}
@@ -100,11 +100,11 @@ describe('react-stay-scrolled', () => {
         );
 
         stayScrolled();
-      }).then(() => {
-        expect(onStayScrolled.calledOnce).to.equal(true);
-        expect(onStayScrolled.firstCall.args).to.deep.equal([true]);
-        expect(isScrolled(container.firstChild)).to.equal(true);
       });
+
+      expect(onStayScrolled.calledOnce).to.equal(true);
+      expect(onStayScrolled.firstCall.args).to.deep.equal([true]);
+      expect(isScrolled(container.firstChild)).to.equal(true);
     });
 
     it('should not stay scrolled when calling stayScrolled with startScrolled = false', () => {

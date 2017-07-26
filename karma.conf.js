@@ -79,7 +79,10 @@ module.exports = function(config) {
     rollupPreprocessor: {
       plugins: [
         require('rollup-plugin-replace')({ 'process.env.NODE_ENV': JSON.stringify(env) }), // this is for react
-        require('rollup-plugin-babel')({ exclude: 'node_modules/**' }),
+        require('rollup-plugin-babel')({
+          exclude: 'node_modules/**',
+          runtimeHelpers: true,
+        }),
         require('rollup-plugin-node-resolve')({
           jsnext: true,
           main: true,
