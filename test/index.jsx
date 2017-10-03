@@ -365,8 +365,8 @@ describe('react-stay-scrolled', () => {
         return <div />;
       };
       ChildComponent.propTypes = {
-        scrollBottom: PropTypes.func,
-        stayScrolled: PropTypes.func,
+        scrollBottom: PropTypes.func.isRequired,
+        stayScrolled: PropTypes.func.isRequired,
       };
 
       const ScrolledChildComponent = scrolled(ChildComponent);
