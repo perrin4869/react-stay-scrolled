@@ -65,7 +65,7 @@ describe('react-stay-scrolled', () => {
 
     it('should fire onScrolled when calling scrollBottom control', () => {
       let scrollBottom;
-      const storeController = (controllers) => { scrollBottom = controllers.scrollBottom; };
+      const storeController = (controllers) => { ({ scrollBottom } = controllers); };
 
       return new Promise((resolve) => {
         ReactDOM.render(<TestComponent provideControllers={storeController} onScrolled={() => resolve()} />, container);
@@ -75,7 +75,7 @@ describe('react-stay-scrolled', () => {
 
     it('should scroll to bottom when calling scrollBottom', () => {
       let scrollBottom;
-      const storeController = (controllers) => { scrollBottom = controllers.scrollBottom; };
+      const storeController = (controllers) => { ({ scrollBottom } = controllers); };
 
       ReactDOM.render(<TestComponent startScrolled={false} provideControllers={storeController} />, container);
 
@@ -87,7 +87,7 @@ describe('react-stay-scrolled', () => {
     it('should stay scrolled when calling stayScrolled with startScrolled', async () => {
       let stayScrolled;
       const onStayScrolled = sinon.spy();
-      const storeController = (controllers) => { stayScrolled = controllers.stayScrolled; };
+      const storeController = (controllers) => { ({ stayScrolled } = controllers); };
 
       await new Promise((resolve) => {
         ReactDOM.render(
@@ -111,7 +111,7 @@ describe('react-stay-scrolled', () => {
       let stayScrolled;
       const onScrolled = sinon.spy();
       const onStayScrolled = sinon.spy();
-      const storeController = (controllers) => { stayScrolled = controllers.stayScrolled; };
+      const storeController = (controllers) => { ({ stayScrolled } = controllers); };
 
       ReactDOM.render(
         <TestComponent
@@ -133,7 +133,7 @@ describe('react-stay-scrolled', () => {
     it('should not notify stay scrolled when calling with notify = false', () => {
       let stayScrolled;
       const onStayScrolled = sinon.spy();
-      const storeController = (controllers) => { stayScrolled = controllers.stayScrolled; };
+      const storeController = (controllers) => { ({ stayScrolled } = controllers); };
 
       ReactDOM.render(
         <TestComponent
@@ -214,7 +214,7 @@ describe('react-stay-scrolled', () => {
       const recursion = (i) => {
         let stayScrolled;
         const onStayScrolled = sinon.spy();
-        const storeController = (controllers) => { stayScrolled = controllers.stayScrolled; };
+        const storeController = (controllers) => { ({ stayScrolled } = controllers); };
         const onScroll = () => {
           const dom = container.firstChild;
           const domMaxScrollTop = maxScrollTop(dom);
@@ -285,7 +285,7 @@ describe('react-stay-scrolled', () => {
 
     const testAnimation = (runScroll) => {
       let scrollBottom;
-      const storeController = (controllers) => { scrollBottom = controllers.scrollBottom; };
+      const storeController = (controllers) => { ({ scrollBottom } = controllers); };
       const onScroll = sinon.spy(() => {
         expect(container.firstChild.scrollTop).to.be.above(0);
         expect(container.firstChild.scrollTop).to.be.most(maxScrollTop(container.firstChild));
@@ -316,7 +316,7 @@ describe('react-stay-scrolled', () => {
     const testAnimationOnScrolled = (runScroll) => {
       let scrollBottom;
       const spy = sinon.spy();
-      const storeController = (controllers) => { scrollBottom = controllers.scrollBottom; };
+      const storeController = (controllers) => { ({ scrollBottom } = controllers); };
       const onScroll = sinon.spy(() => {
         expect(spy.called).to.equal(false);
       });

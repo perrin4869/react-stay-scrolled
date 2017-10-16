@@ -2,7 +2,7 @@ const path = require('path');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const eslint = require('gulp-eslint');
-const Server = require('karma').Server;
+const { Server } = require('karma');
 
 const src = 'src/*.js';
 
