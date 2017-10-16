@@ -56,9 +56,16 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
+    customLaunchers: {
+      FirefoxHeadless: { // TODO: https://github.com/karma-runner/karma-firefox-launcher/issues/76
+        base: 'Firefox',
+        flags: ['-headless']
+      }
+    },
+
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['ChromeHeadless', 'FirefoxHeadless'],
+    browsers: ['Chrome', 'Firefox'],
 
 
     // Continuous Integration mode
@@ -108,7 +115,7 @@ module.exports = function(config) {
 
   if (process.env.TRAVIS) {
     configuration.reporters.push('coveralls');
-    configuration.browsers[0] = 'Chrome_travis_ci';
+    configuration.browsers = ['ChromeHeadless', 'FirefoxHeadless'];
   }
 
   config.set(configuration);
