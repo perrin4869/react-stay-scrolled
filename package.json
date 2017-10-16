@@ -56,14 +56,14 @@
     "karma-rollup-preprocessor": "^4.0.1",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.31",
-    "mocha": "^3.4.2",
+    "mocha": "^4.0.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^1.1.1",
-    "sinon": "^2.3.8",
+    "sinon": "^4.0.1",
     "velocity-animate": "^1.5.0"
   },
   "peerDependencies": {
