@@ -3,6 +3,7 @@
 
 const env = 'test';
 if (!process.env.NODE_ENV) process.env.NODE_ENV = env;
+if (!process.env.CHROME_BIN) process.env.CHROME_BIN = require('puppeteer').executablePath();
 
 module.exports = function(config) {
   const configuration = {
@@ -19,11 +20,6 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'test/*.js?(x)'
-    ],
-
-
-    // list of files to exclude
-    exclude: [
     ],
 
 
@@ -56,6 +52,7 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
+
     customLaunchers: {
       FirefoxHeadless: { // TODO: https://github.com/karma-runner/karma-firefox-launcher/issues/76
         base: 'Firefox',
@@ -65,7 +62,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'Firefox'],
+    browsers: ['ChromeHeadless', 'FirefoxHeadless'],
 
 
     // Continuous Integration mode
@@ -115,7 +112,6 @@ module.exports = function(config) {
 
   if (process.env.TRAVIS) {
     configuration.reporters.push('coveralls');
-    configuration.browsers = ['ChromeHeadless', 'FirefoxHeadless'];
   }
 
   config.set(configuration);

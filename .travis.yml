@@ -9,6 +9,5 @@ deploy:
   on:
     tags: true
 before_install:
-- export CHROME_BIN=chromium-browser
 - npm install -g gulp
 script: gulp
