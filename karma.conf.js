@@ -98,7 +98,7 @@ module.exports = function(config) {
         }),
       ],
       format: 'iife',
-      sourceMap: 'inline',
+      sourcemap: 'inline',
     },
 
     coverageReporter: {
