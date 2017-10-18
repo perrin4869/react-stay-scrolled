@@ -90,7 +90,7 @@ module.exports = function(config) {
           namedExports: {
             'node_modules/chai/index.js': ['expect'],
             'node_modules/prop-types/index.js': ['bool', 'func', 'node', 'number', 'oneOfType', 'element', 'string'],
-            'node_modules/react/react.js': [
+            'node_modules/react/index.js': [
               'createElement',
               'Component',
             ],
