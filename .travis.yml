@@ -8,6 +8,5 @@ deploy:
   provider: npm
   on:
     tags: true
-before_install:
-- npm install -g gulp
-script: gulp
+script:
+- npm test
