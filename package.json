@@ -9,7 +9,7 @@
     "test": "NODE_ENV=test karma start --single-run --no-auto-watch",
     "tdd": "NODE_ENV=test karma start",
     "build": "babel src -d lib",
-    "prepare": "npm run build"
+    "prepare": "npm run test && npm run build"
   },
   "repository": {
     "type": "git",
