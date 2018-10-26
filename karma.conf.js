@@ -19,14 +19,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/*.js?(x)'
+      'test/index.js'
     ],
 
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/*.js?(x)': ['rollup', 'sourcemap'],
+      'test/index.js': ['rollup', 'sourcemap'],
     },
 
 
@@ -52,13 +52,6 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
-
-    customLaunchers: {
-      FirefoxHeadless: { // TODO: https://github.com/karma-runner/karma-firefox-launcher/issues/76
-        base: 'Firefox',
-        flags: ['-headless']
-      }
-    },
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
