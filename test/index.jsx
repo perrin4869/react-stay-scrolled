@@ -159,7 +159,9 @@ describe('react-stay-scrolled', () => {
           expect(args).to.deep.equal([true]);
           expect(isScrolled(this.dom)).to.equal(true);
 
-          if (this.state.messages.length > 4) {
+          const { messages } = this.state;
+
+          if (messages.length > 4) {
             done(); // After 5 messages stop
           } else {
             this.addMessage();
@@ -175,17 +177,19 @@ describe('react-stay-scrolled', () => {
         }
 
         addMessage = () => {
-          this.setState({
+          this.setState(({ messages }) => ({
             messages: [
-              ...this.state.messages,
+              ...messages,
               'foo',
             ],
-          }, () => {
+          }), () => {
             this.stayScrolled();
           });
         }
 
         render() {
+          const { messages } = this.state;
+
           return (
             <StayScrolled
               style={{ height: testHeight, width: 100, overflow: 'auto' }}
@@ -194,7 +198,7 @@ describe('react-stay-scrolled', () => {
               _provideDOMNode={this.storeDOM}
             >
               {
-                this.state.messages.map((message, i) => (
+                messages.map((message, i) => (
                   <div key={i} style={{ height: testScrollHeight, width: 100 }}>{message}</div> // eslint-disable-line react/no-array-index-key
                 ))
               }

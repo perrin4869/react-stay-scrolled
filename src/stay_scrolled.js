@@ -76,14 +76,6 @@ export default class StayScrolled extends Component {
     this.dom = dom;
   }
 
-  isScrolled() {
-    const { stayInaccuracy } = this.props;
-
-    // scrollTop is a floating point, the rest are integers rounded up
-    // naively: actualScrollHeight = scrollHeight - (Math.ceil(scrollTop) - scrollTop)
-    return Math.ceil(this.dom.scrollTop) >= maxScrollTop(this.dom) - stayInaccuracy;
-  }
-
   stayScrolled = (notify = true) => {
     const { onStayScrolled } = this.props;
 
@@ -103,6 +95,14 @@ export default class StayScrolled extends Component {
     debug(`Scrolling bottom: scrollOffset=${offset}`);
 
     runScroll(this.dom, offset);
+  }
+
+  isScrolled() {
+    const { stayInaccuracy } = this.props;
+
+    // scrollTop is a floating point, the rest are integers rounded up
+    // naively: actualScrollHeight = scrollHeight - (Math.ceil(scrollTop) - scrollTop)
+    return Math.ceil(this.dom.scrollTop) >= maxScrollTop(this.dom) - stayInaccuracy;
   }
 
   render() {
