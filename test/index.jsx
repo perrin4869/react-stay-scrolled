@@ -357,11 +357,6 @@ describe('react-stay-scrolled', () => {
   });
 
   describe('hoc', () => {
-    it('should use correct displayName', () => {
-      const ScrolledDiv = scrolled('div');
-      expect(ScrolledDiv.displayName).to.equal('scrolled(div)');
-    });
-
     it('should provide controls to children', () => {
       const ChildComponent = ({ scrollBottom, stayScrolled }) => {
         expect(typeof scrollBottom === 'function').to.equal(true);

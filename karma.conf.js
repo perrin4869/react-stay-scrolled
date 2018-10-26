@@ -84,6 +84,7 @@ module.exports = (config) => {
             'node_modules/prop-types/index.js': ['bool', 'func', 'node', 'number', 'oneOfType', 'element', 'string'],
             'node_modules/react/index.js': [
               'createElement',
+              'forwardRef',
               'Component',
             ],
           },
