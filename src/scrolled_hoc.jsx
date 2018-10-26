@@ -1,37 +1,24 @@
 import React, { forwardRef } from 'react';
-import PropTypes from 'prop-types';
 import hoistStatics from 'hoist-non-react-statics';
 import getDisplayName from 'react-display-name';
+import ScrolledContext from './context';
 
 export default (WrappedComponent) => {
-  const Scrolled = (props, context) => {
-    const { stayScrolled, scrollBottom } = context;
-    const { forwardedRef } = props;
-
-    return (
-      <WrappedComponent
-        {...props}
-        ref={forwardedRef}
-        stayScrolled={stayScrolled}
-        scrollBottom={scrollBottom}
-      />
-    );
-  };
-
-  Scrolled.displayName = `scrolled(${getDisplayName(WrappedComponent)})`;
-  Scrolled.WrappedComponent = WrappedComponent;
-
-  Scrolled.contextTypes = {
-    stayScrolled: PropTypes.func.isRequired,
-    scrollBottom: PropTypes.func.isRequired,
-  };
-
-  const HoistedScrolled = hoistStatics(Scrolled, WrappedComponent);
-
   function forwardScrolled(props, ref) {
-    return <HoistedScrolled {...props} forwardedRef={ref} />;
+    return (
+      <ScrolledContext.Consumer>
+        {({ stayScrolled, scrollBottom }) => (
+          <WrappedComponent
+            {...props}
+            ref={ref}
+            stayScrolled={stayScrolled}
+            scrollBottom={scrollBottom}
+          />
+        )}
+      </ScrolledContext.Consumer>
+    );
   }
-  forwardScrolled.displayName = Scrolled.displayName;
+  forwardScrolled.displayName = `scrolled(${getDisplayName(WrappedComponent)})`;
 
-  return forwardRef(forwardScrolled);
+  return hoistStatics(forwardRef(forwardScrolled), WrappedComponent);
 };

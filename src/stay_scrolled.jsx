@@ -1,5 +1,6 @@
-import { Component, createElement } from 'react';
+import React, { Component, createElement, createRef } from 'react';
 import PropTypes from 'prop-types';
+import ScrolledContext from './context';
 import { maxScrollTop, runScroll as defaultRunScroll } from './util';
 
 const noop = () => {};
@@ -16,7 +17,6 @@ export default class StayScrolled extends Component {
     stayInaccuracy: PropTypes.number,
     provideControllers: PropTypes.func,
     debug: PropTypes.func,
-    _provideDOMNode: PropTypes.func, // for testing only, don't use findDOMNode
   }
 
   static defaultProps = {
@@ -30,20 +30,9 @@ export default class StayScrolled extends Component {
     runScroll: defaultRunScroll,
     provideControllers: noop, // TODO
     debug: noop,
-    _provideDOMNode: noop, // TODO
   }
 
-  static childContextTypes = {
-    scrollBottom: PropTypes.func,
-    stayScrolled: PropTypes.func,
-  }
-
-  getChildContext() {
-    return {
-      stayScrolled: this.stayScrolled,
-      scrollBottom: this.scrollBottom,
-    };
-  }
+  dom = createRef()
 
   componentDidMount() {
     const { startScrolled, provideControllers } = this.props;
@@ -70,10 +59,18 @@ export default class StayScrolled extends Component {
     }
   }
 
-  storeDOM = (dom) => {
-    const { _provideDOMNode } = this.props;
-    _provideDOMNode(dom);
-    this.dom = dom;
+  getDOM() {
+    return this.dom.current;
+  }
+
+  scrollBottom = () => {
+    const dom = this.getDOM();
+    const offset = maxScrollTop(dom);
+    const { runScroll, debug } = this.props;
+
+    debug(`Scrolling bottom: scrollOffset=${offset}`);
+
+    runScroll(dom, offset);
   }
 
   stayScrolled = (notify = true) => {
@@ -88,21 +85,13 @@ export default class StayScrolled extends Component {
     }
   }
 
-  scrollBottom = () => {
-    const offset = maxScrollTop(this.dom);
-    const { runScroll, debug } = this.props;
-
-    debug(`Scrolling bottom: scrollOffset=${offset}`);
-
-    runScroll(this.dom, offset);
-  }
-
   isScrolled() {
     const { stayInaccuracy } = this.props;
+    const dom = this.getDOM();
 
     // scrollTop is a floating point, the rest are integers rounded up
     // naively: actualScrollHeight = scrollHeight - (Math.ceil(scrollTop) - scrollTop)
-    return Math.ceil(this.dom.scrollTop) >= maxScrollTop(this.dom) - stayInaccuracy;
+    return Math.ceil(dom.scrollTop) >= maxScrollTop(dom) - stayInaccuracy;
   }
 
   render() {
@@ -117,15 +106,24 @@ export default class StayScrolled extends Component {
       stayInaccuracy, // eslint-disable-line no-unused-vars
       provideControllers, // eslint-disable-line no-unused-vars
       debug, // eslint-disable-line no-unused-vars
-      _provideDOMNode, // eslint-disable-line no-unused-vars
       ...rest
     } = this.props;
+
     const props = {
       ...rest,
-      ref: this.storeDOM,
+      ref: this.dom,
       onScroll: this.onScroll,
     };
 
-    return createElement(component, props, children);
+    const context = {
+      stayScrolled: this.stayScrolled,
+      scrollBottom: this.scrollBottom,
+    };
+
+    return (
+      <ScrolledContext.Provider value={context}>
+        {createElement(component, props, children)}
+      </ScrolledContext.Provider>
+    );
   }
 }

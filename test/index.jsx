@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, createRef } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Velocity from 'velocity-animate';
@@ -151,13 +151,15 @@ describe('react-stay-scrolled', () => {
       class Messages extends Component {
         state = { messages: [] }
 
+        stayScrolledRef = createRef()
+
         componentDidMount() {
           this.addMessage();
         }
 
         onStayScrolled = (...args) => {
           expect(args).to.deep.equal([true]);
-          expect(isScrolled(this.dom)).to.equal(true);
+          expect(isScrolled(this.stayScrolledRef.current.getDOM())).to.equal(true);
 
           const { messages } = this.state;
 
@@ -170,10 +172,6 @@ describe('react-stay-scrolled', () => {
 
         storeControls = ({ stayScrolled }) => {
           this.stayScrolled = stayScrolled;
-        }
-
-        storeDOM = (dom) => {
-          this.dom = dom;
         }
 
         addMessage = () => {
@@ -192,10 +190,10 @@ describe('react-stay-scrolled', () => {
 
           return (
             <StayScrolled
+              ref={this.stayScrolledRef}
               style={{ height: testHeight, width: 100, overflow: 'auto' }}
               onStayScrolled={this.onStayScrolled}
               provideControllers={this.storeControls}
-              _provideDOMNode={this.storeDOM}
             >
               {
                 messages.map((message, i) => (
@@ -356,7 +354,7 @@ describe('react-stay-scrolled', () => {
     it('should call onScrolled when using jquery', () => testAnimationOnScrolled(jqueryRunScroll));
   });
 
-  describe('hoc', () => {
+  describe('hoc', (done) => {
     it('should provide controls to children', () => {
       const ChildComponent = ({ scrollBottom, stayScrolled }) => {
         expect(typeof scrollBottom === 'function').to.equal(true);
@@ -375,6 +373,7 @@ describe('react-stay-scrolled', () => {
           <ScrolledChildComponent />
         </StayScrolled>,
         container,
+        done,
       );
     });
   });
