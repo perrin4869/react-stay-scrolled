@@ -2,19 +2,16 @@ const env = process.env.NODE_ENV;
 
 module.exports = {
   presets: [
-    (env !== 'test') ? 'env' : ['env', {
-      modules: false,
+    (env !== 'test') ? '@babel/env' : ['@babel/env', {
       targets: {
-        browsers: ['chrome >= 60', 'firefox >= 56'], // Test in this browsers is enough
-      }
+        browsers: ['chrome >= 60', 'firefox >= 56'], // Test in these browsers is enough
+      },
     }],
-    'react',
+    '@babel/react',
   ],
   plugins: [
-    'transform-object-rest-spread',
-    'transform-class-properties',
+    '@babel/proposal-class-properties',
   ].concat(env === 'test' ? [
-    'external-helpers',
     ['istanbul', { exclude: ['test/*.jsx'] }],
   ] : []),
 };
