@@ -35,7 +35,7 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
-    "babel-plugin-istanbul": "^5.0.1",
+    "babel-plugin-istanbul": "^5.1.0",
     "chai": "^4.2.0",
     "dynamics.js": "^1.1.5",
     "eslint": "^5.7.0",
@@ -43,7 +43,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1",
-    "jquery": "^3.2.1",
+    "jquery": "^3.3.1",
     "karma": "^3.1.1",
     "karma-chrome-launcher": "^2.2.0",
     "karma-coverage": "^1.1.2",
@@ -54,24 +54,24 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.32",
     "mocha": "^5.2.0",
-    "puppeteer": "^0.12.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
+    "puppeteer": "^1.9.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
     "rollup": "^0.66.6",
     "rollup-plugin-babel": "^4.0.3",
-    "rollup-plugin-commonjs": "^8.2.4",
-    "rollup-plugin-node-resolve": "^3.0.0",
-    "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-replace": "^2.1.0",
     "rollup-plugin-terser": "^3.0.0",
     "sinon": "^7.1.0",
-    "velocity-animate": "^1.5.0"
+    "velocity-animate": "^1.5.2"
   },
   "peerDependencies": {
     "react": "^0.14.0 || >=15.0.0"
   },
   "dependencies": {
-    "hoist-non-react-statics": "^2.3.1",
-    "prop-types": "^15.6.0",
-    "react-display-name": "^0.2.3"
+    "hoist-non-react-statics": "^3.0.1",
+    "prop-types": "^15.6.2",
+    "react-display-name": "^0.2.4"
   }
 }
