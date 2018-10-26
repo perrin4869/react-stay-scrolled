@@ -17,7 +17,7 @@ const external = id => !id.startsWith('.') && !id.startsWith('/');
 export default [{
   external,
   input,
-  output: { file: `dist/${pkg.name}.cjs.js`, format: 'cjs' },
+  output: { file: `dist/${pkg.name}.cjs.js`, format: 'cjs', exports: 'named' },
   plugins,
 }, {
   external,
@@ -28,7 +28,7 @@ export default [{
   external: Object.keys(globals),
   input,
   output: {
-    file: `dist/${pkg.name}.umd.js`, format: 'umd', globals, name,
+    file: `dist/${pkg.name}.umd.js`, format: 'umd', globals, name, exports: 'named',
   },
   plugins: [
     ...plugins,
