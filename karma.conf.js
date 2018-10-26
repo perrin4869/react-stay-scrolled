@@ -88,6 +88,7 @@ module.exports = (config) => {
               'forwardRef',
               'createContext',
               'Component',
+              'StrictMode',
             ],
           },
         }),
