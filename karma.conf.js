@@ -5,7 +5,7 @@ const env = 'test';
 if (!process.env.NODE_ENV) process.env.NODE_ENV = env;
 if (!process.env.CHROME_BIN) process.env.CHROME_BIN = require('puppeteer').executablePath();
 
-module.exports = function(config) {
+module.exports = (config) => {
   const configuration = {
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -19,7 +19,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/index.js'
+      'test/index.js',
     ],
 
 
@@ -94,12 +94,12 @@ module.exports = function(config) {
     },
 
     coverageReporter: {
-      dir : 'coverage/',
+      dir: 'coverage/',
       reporters: [
-        { type : 'html' },
-        { type : 'lcov' }
-      ]
-    }
+        { type: 'html' },
+        { type: 'lcov' },
+      ],
+    },
   };
 
   if (process.env.TRAVIS) {
@@ -107,4 +107,4 @@ module.exports = function(config) {
   }
 
   config.set(configuration);
-}
+};

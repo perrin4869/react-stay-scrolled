@@ -6,6 +6,9 @@
     "max-len": ["error", 150],
     "new-cap": [2, {
       "capIsNewExceptions": ["Velocity"]
+    }],
+    "import/no-extraneous-dependencies": ["error", {
+      devDependencies: ['karma.conf.js', 'rollup.config.js']
     }]
   }
 }
