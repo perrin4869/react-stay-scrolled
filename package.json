@@ -2,13 +2,14 @@
   "name": "react-stay-scrolled",
   "version": "2.1.1",
   "description": "React component to keep content always scrolled down",
-  "main": "lib/index.js",
+  "main": "dist/react-stay-scrolled.cjs.js",
+  "module": "dist/react-stay-scrolled.esm.js",
   "scripts": {
     "lint": "eslint 'src/*.js' 'test/*.js?(x)'",
     "pretest": "npm run lint",
     "test": "NODE_ENV=test karma start --single-run --no-auto-watch",
     "tdd": "NODE_ENV=test karma start",
-    "build": "babel src -d lib",
+    "build": "rollup -c",
     "prepare": "npm run test && npm run build"
   },
   "repository": {
@@ -16,7 +17,7 @@
     "url": "git+https://github.com/perrin4869/react-stay-scrolled.git"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "keywords": [
     "react-component",
@@ -29,7 +30,6 @@
   },
   "homepage": "https://github.com/perrin4869/react-stay-scrolled#readme",
   "devDependencies": {
-    "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
@@ -62,6 +62,7 @@
     "rollup-plugin-commonjs": "^8.2.4",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^2.0.0",
+    "rollup-plugin-terser": "^3.0.0",
     "sinon": "^7.1.0",
     "velocity-animate": "^1.5.0"
   },
