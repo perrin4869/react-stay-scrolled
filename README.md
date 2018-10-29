@@ -10,7 +10,7 @@
 
 ## Live demo
 
-You can see the simplest demo here: [Live demo](https://perrin4869.github.io/react-stay-scrolled)
+You can see the simplest demo here: [Live demo](https://codesandbox.io/s/64wovj59yz)
 
 ## Install
 
