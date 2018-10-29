@@ -14,7 +14,7 @@
       devDependencies: [
         'karma.conf.js',
         'rollup.config.js',
-        'examples/gulpfile.js'
+        'examples/rollup.config.js'
       ]
     }]
   }
