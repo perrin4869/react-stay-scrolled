@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { scrolled } from 'react-stay-scrolled';
 
-class Message extends Component {
-
+class Message extends PureComponent {
   static propTypes = {
     text: PropTypes.string.isRequired,
     stayScrolled: PropTypes.func.isRequired,
@@ -18,7 +18,6 @@ class Message extends Component {
 
     return <div>{text}</div>;
   }
-
 }
 
 export default scrolled(Message);

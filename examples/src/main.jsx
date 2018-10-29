@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import StayScrolledDemo from './demo.jsx';
+import StayScrolledDemo from './demo';
 
 ReactDOM.render(
   <StayScrolledDemo />,
-  document.getElementById('demo')
+  document.getElementById('demo'),
 );

@@ -1,6 +1,9 @@
 {
   "extends": "airbnb",
   "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
   "rules": {
     "no-multi-assign": "off",
     "max-len": ["error", 150],
@@ -8,7 +11,11 @@
       "capIsNewExceptions": ["Velocity"]
     }],
     "import/no-extraneous-dependencies": ["error", {
-      devDependencies: ['karma.conf.js', 'rollup.config.js']
+      devDependencies: [
+        'karma.conf.js',
+        'rollup.config.js',
+        'examples/gulpfile.js'
+      ]
     }]
   }
 }

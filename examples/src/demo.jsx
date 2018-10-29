@@ -1,5 +1,5 @@
 import React from 'react';
-import Messages from './messages.jsx';
+import Messages from './messages';
 
 const style = {
   display: 'inline-block',
@@ -9,7 +9,7 @@ const style = {
   border: '1px solid #000',
 };
 
-const StayScrolledDemo = ({}) => (
+const StayScrolledDemo = () => (
   <Messages style={style} />
 );
 
