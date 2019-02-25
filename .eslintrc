@@ -11,7 +11,7 @@
       "capIsNewExceptions": ["Velocity"]
     }],
     "import/no-extraneous-dependencies": ["error", {
-      devDependencies: [
+      "devDependencies": [
         'karma.conf.js',
         'rollup.config.js',
         'examples/rollup.config.js'
