@@ -2,7 +2,8 @@ import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
-import liveServer from 'rollup-plugin-live-server';
+import serve from 'rollup-plugin-serve';
+import livereload from 'rollup-plugin-serve';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -30,10 +31,11 @@ export default {
         '../node_modules/react-dom/index.js': ['render'],
       },
     }),
-    liveServer({
+    serve({
+      contentBase: 'public',
       port: process.env.PORT || 3000,
-      root: 'public',
     }),
+    livereload(),
   ].filter(Boolean),
   output: {
     file: './public/client.js',
