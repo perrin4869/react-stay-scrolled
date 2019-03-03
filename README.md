@@ -104,7 +104,9 @@ A `ref` to the DOM element whose scroll position you want to control
 
 ### options
 
-Type: `object`, default: ```javascript
+Type: `object`, default:
+
+```javascript
 {
   initialScroll: null,
   inaccuracy: 0,
