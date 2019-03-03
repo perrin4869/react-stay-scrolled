@@ -14,7 +14,7 @@ You can see the simplest demo here: [Live demo](https://codesandbox.io/s/6w5vx7y
 
 ## Install
 
-```
+```bash
 $ npm install --save react-stay-scrolled
 ```
 
@@ -22,10 +22,10 @@ $ npm install --save react-stay-scrolled
 
 Run examples:
 
-```javascript
-cd examples
-npm install
-npm start
+```bash
+$ cd examples
+$ npm install
+$ npm start
 ```
 
 ## Usage
