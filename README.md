@@ -199,11 +199,17 @@ Type: `boolean` optional, default `true`.
 
 If `true`, it fires an `onStayScrolled` event after execution, notifying whether or not the component stayed scrolled
 
+### scroll
+
+Type: `function(position)`
+
+Scrolls down to the desired position. If given `Infinity`, it scrolls to the bottom
+
 ### scrollDown
 
 Type: `function()`
 
-Scrolls down the wrapper element, regardless of current position
+Scrolls down the wrapper element, regardless of current position. Equivalent to `() => scroll(Infinity)`.
 
 ## TODO
 

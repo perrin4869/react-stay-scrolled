@@ -26,13 +26,17 @@ export default (domRef, {
     return () => domRef.current.removeEventListener('scroll', onScroll);
   }, [onScrolled]);
 
-  const scrollBottom = useCallback(() => {
+  const scroll = useCallback((position) => {
     invariant(domRef.current !== null, `Trying to scroll to the bottom, but no element was found.
       Did you call this scrollBottom before the component with this hook finished mounting?`);
 
-    const offset = maxScrollTop(domRef.current);
+    const offset = position === Infinity ? maxScrollTop(domRef.current) : position;
     runScroll(domRef.current, offset);
   }, [runScroll]);
+
+  const scrollBottom = useCallback(() => {
+    scroll(Infinity);
+  }, [scroll]);
 
   const stayScrolled = useCallback((notify = true) => {
     if (wasScrolled.current) scrollBottom();
@@ -41,14 +45,14 @@ export default (domRef, {
 
   useLayoutEffect(() => {
     if (initialScroll !== null) {
-      const offset = initialScroll === Infinity ? maxScrollTop(domRef.current) : initialScroll;
-      runScroll(domRef.current, offset);
+      scroll(initialScroll);
     }
 
     wasScrolled.current = isScrolled();
   }, []);
 
   return {
+    scroll,
     stayScrolled,
     scrollBottom,
   };
