@@ -2,7 +2,6 @@ import babel from 'rollup-plugin-babel';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
-import remap from 'rollup-plugin-remap';
 import liveServer from 'rollup-plugin-live-server';
 
 const env = process.env.NODE_ENV || 'development';
@@ -10,10 +9,6 @@ const env = process.env.NODE_ENV || 'development';
 export default {
   input: './src/main.jsx',
   plugins: [
-    env !== 'production' && remap({
-      originalPath: './src/debug.js',
-      targetPath: './src/debug.dev.js',
-    }),
     replace({
       'process.env.NODE_ENV': JSON.stringify(env),
     }),
@@ -24,7 +19,6 @@ export default {
         '@babel/env',
         '@babel/react',
       ],
-      plugins: ['@babel/proposal-class-properties'],
     }),
     resolve({
       extensions: ['.js', '.jsx'],
@@ -32,9 +26,8 @@ export default {
     commonjs({
       include: ['node_modules/**', '../node_modules/**'],
       namedExports: {
-        '../node_modules/react/index.js': ['createElement', 'createContext', 'createRef', 'forwardRef', 'Component'],
-        'node_modules/react/index.js': ['PureComponent'],
-        'node_modules/react-dom/index.js': ['render'],
+        '../node_modules/react/index.js': ['createElement', 'useEffect', 'useCallback', 'useRef', 'useState', 'useLayoutEffect'],
+        '../node_modules/react-dom/index.js': ['render'],
       },
     }),
     liveServer({
@@ -43,9 +36,8 @@ export default {
     }),
   ].filter(Boolean),
   output: {
-    file: 'client.js',
+    file: './public/client.js',
     format: 'iife',
-    dir: './public',
     name: 'ReactStayScrolledExamples',
     sourcemap: true,
   },

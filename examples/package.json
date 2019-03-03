@@ -10,7 +10,6 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.1.2",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "rollup": "^0.66.6",
@@ -18,13 +17,11 @@
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-live-server": "^1.0.0",
     "rollup-plugin-node-resolve": "^3.4.0",
-    "rollup-plugin-remap": "0.0.3",
     "rollup-plugin-replace": "^2.1.0"
   },
   "dependencies": {
-    "prop-types": "^15.6.2",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
+    "react": "file:../node_modules/react",
+    "react-dom": "file:../node_modules/react-dom",
     "react-stay-scrolled": "file:.."
   }
 }

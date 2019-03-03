@@ -20,7 +20,7 @@
     "dist"
   ],
   "keywords": [
-    "react-component",
+    "react-hooks",
     "scroll"
   ],
   "author": "Julian Grinblat <julian@dotcore.co.il>",
@@ -31,7 +31,6 @@
   "homepage": "https://github.com/perrin4869/react-stay-scrolled#readme",
   "devDependencies": {
     "@babel/core": "^7.1.2",
-    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
@@ -54,9 +53,10 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.32",
     "mocha": "^6.0.1",
+    "prop-types": "^15.7.2",
     "puppeteer": "^1.9.0",
-    "react": "^16.6.0",
-    "react-dom": "^16.6.0",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
     "rollup": "^1.2.3",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.2.1",
@@ -67,11 +67,6 @@
     "velocity-animate": "^1.5.2"
   },
   "peerDependencies": {
-    "react": ">=16.3.0"
-  },
-  "dependencies": {
-    "hoist-non-react-statics": "^3.0.1",
-    "prop-types": "^15.6.2",
-    "react-display-name": "^0.2.4"
+    "react": ">=16.8.0"
   }
 }

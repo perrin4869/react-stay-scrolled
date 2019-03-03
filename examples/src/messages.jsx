@@ -1,41 +1,40 @@
-import React, { PureComponent } from 'react';
-import StayScrolled from 'react-stay-scrolled';
-import Message from './message';
-import debug from './debug';
+import React, {
+  useState, useRef, useEffect, useLayoutEffect,
+} from 'react';
+import useStayScrolled from 'react-stay-scrolled';
 
 const message = { text: 'foo' };
 
-const initialState = {
-  messages: [
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-    message,
-  ],
+const initialMessages = [
+  message,
+  message,
+  message,
+  message,
+  message,
+  message,
+  message,
+];
+
+export default (props) => {
+  const divRef = useRef(null);
+  const intervalRef = useRef(null);
+  const { stayScrolled } = useStayScrolled(divRef);
+  const [messages, setMessages] = useState(initialMessages);
+
+  useEffect(() => {
+    intervalRef.current = setInterval(() => {
+      setMessages(prevMessages => prevMessages.concat([message]));
+    }, 500);
+  }, []);
+
+  useLayoutEffect(() => {
+    stayScrolled();
+  }, [messages]);
+
+  return (
+    <div ref={divRef} {...props}>
+      {/* eslint-disable-next-line react/no-array-index-key */}
+      {messages.map(({ text }, i) => <div key={i}>{`${text} ${i}`}</div>)}
+    </div>
+  );
 };
-
-export default class Messages extends PureComponent {
-  interval = setInterval(() => {
-    this.setState(({ messages }) => ({
-      messages: [...messages, message],
-    }));
-  }, 500);
-
-  state = initialState
-
-  render() {
-    const { messages } = this.state;
-
-    return (
-      <StayScrolled debug={debug} {...this.props}>
-        {
-          // eslint-disable-next-line react/no-array-index-key
-          messages.map((msg, i) => <Message text={`${msg.text} ${i}`} key={i} />)
-        }
-      </StayScrolled>
-    );
-  }
-}
