@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useCallback } from 'react';
+import invariant from 'tiny-invariant';
 import { maxScrollTop, runScroll as defaultRunScroll } from './util';
 
 const noop = () => {};
@@ -26,6 +27,9 @@ export default (domRef, {
   }, [onScrolled]);
 
   const scrollBottom = useCallback(() => {
+    invariant(domRef.current !== null, `Trying to scroll to the bottom, but no element was found.
+      Did you call this scrollBottom before the component with this hook finished mounting?`);
+
     const offset = maxScrollTop(domRef.current);
     runScroll(domRef.current, offset);
   }, [runScroll]);

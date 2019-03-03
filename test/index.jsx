@@ -276,6 +276,33 @@ describe('react-stay-scrolled', () => {
     });
   });
 
+  describe('invariant', () => {
+    it('should throw when calling scrollBottom from mounted child', (done) => {
+      const Child = ({ scrollBottom }) => {
+        useLayoutEffect(() => {
+          expect(scrollBottom).to.throw(Error, /hook finished mounting/);
+          done();
+        }, []);
+
+        return null;
+      };
+
+      const Parent = () => {
+        const ref = useRef(null);
+        const { scrollBottom } = useStayScrolled(ref);
+
+        return (
+          <div ref={ref}>
+            <Child scrollBottom={scrollBottom} />
+          </div>
+        );
+      };
+
+
+      render(<Parent />, container);
+    });
+  });
+
   describe('animation', () => {
     const duration = 100;
     const easing = 'linear';

@@ -7,5 +7,8 @@ module.exports = api => ({
     }],
     '@babel/react',
   ],
-  plugins: api.env() === 'test' ? [['istanbul', { exclude: ['test/*.jsx'] }]] : [],
+  plugins: [
+    'dev-expression',
+    api.env() === 'test' && ['istanbul', { exclude: ['test/*.jsx'] }],
+  ].filter(Boolean),
 });
