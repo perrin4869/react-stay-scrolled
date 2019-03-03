@@ -3,7 +3,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import replace from 'rollup-plugin-replace';
 import serve from 'rollup-plugin-serve';
-import livereload from 'rollup-plugin-serve';
+import livereload from 'rollup-plugin-livereload';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -35,7 +35,7 @@ export default {
       contentBase: 'public',
       port: process.env.PORT || 3000,
     }),
-    livereload(),
+    livereload('public'),
   ].filter(Boolean),
   output: {
     file: './public/client.js',
