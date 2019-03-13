@@ -206,7 +206,8 @@ describe('react-stay-scrolled', () => {
   });
 
   describe('accuracy', () => {
-    it('should stay scrolled only when below inaccuracy', (done) => {
+    it('should stay scrolled only when below inaccuracy', function (done) {
+      this.timeout(5000);
       const inaccuracy = 5;
 
       const recursion = (i) => {

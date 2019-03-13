@@ -4,8 +4,9 @@ module.exports = {
     browser: true
   },
   rules: {
-    'no-multi-assign': 'off',
+    'no-multi-assign': 0,
     'max-len': ['error', 150],
+    'func-names': 0,
     'new-cap': [2, {
       capIsNewExceptions: ['Velocity']
     }],
