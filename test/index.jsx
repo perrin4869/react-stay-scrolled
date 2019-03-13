@@ -127,7 +127,6 @@ describe('react-stay-scrolled', () => {
 
     it('should stay scrolled when calling stayScrolled and starting scrolled', async () => {
       let stayScrolled;
-      const onStayScrolled = sinon.spy();
       const storeController = (controllers) => { ({ stayScrolled } = controllers); };
 
       await new Promise((resolve) => {
@@ -135,57 +134,33 @@ describe('react-stay-scrolled', () => {
           <TestComponent
             initialScroll={Infinity}
             onScrolled={() => resolve()}
-            onStayScrolled={onStayScrolled}
             provideControllers={storeController}
           />,
           container,
         );
 
-        stayScrolled();
+        expect(stayScrolled()).to.equal(true);
       });
 
-      expect(onStayScrolled.calledOnce).to.equal(true);
-      expect(onStayScrolled.firstCall.args).to.deep.equal([true]);
       expect(isScrolled(container.firstChild)).to.equal(true);
     });
 
     it('should not stay scrolled when calling stayScrolled and not starting scrolled', () => {
       let stayScrolled;
       const onScrolled = sinon.spy();
-      const onStayScrolled = sinon.spy();
       const storeController = (controllers) => { ({ stayScrolled } = controllers); };
 
       render(
         <TestComponent
           onScrolled={onScrolled}
-          onStayScrolled={onStayScrolled}
           provideControllers={storeController}
         />,
         container,
       );
 
-      stayScrolled();
+      expect(stayScrolled()).to.equal(false);
       expect(onScrolled.called).to.equal(false);
-      expect(onStayScrolled.calledOnce).to.equal(true);
-      expect(onStayScrolled.firstCall.args).to.deep.equal([false]);
       expect(isScrolled(container.firstChild)).to.equal(false);
-    });
-
-    it('should not notify stay scrolled when calling with notify = false', () => {
-      let stayScrolled;
-      const onStayScrolled = sinon.spy();
-      const storeController = (controllers) => { ({ stayScrolled } = controllers); };
-
-      render(
-        <TestComponent
-          onStayScrolled={onStayScrolled}
-          provideControllers={storeController}
-        />,
-        container,
-      );
-
-      stayScrolled(false);
-      expect(onStayScrolled.called).to.equal(false);
     });
 
     it('should stay scrolled when adding new elements', (done) => {
@@ -197,8 +172,11 @@ describe('react-stay-scrolled', () => {
           setMessages(prevMessages => prevMessages.concat(['foo']));
         };
 
-        const onStayScrolled = (...args) => {
-          expect(args).to.deep.equal([true]);
+        const { stayScrolled } = useStayScrolled(ref);
+
+        useEffect(() => { addMessage(); }, []);
+        useLayoutEffect(() => {
+          expect(stayScrolled()).to.equal(true);
           expect(isScrolled(ref.current)).to.equal(true);
 
           if (messages.length > 4) {
@@ -206,12 +184,7 @@ describe('react-stay-scrolled', () => {
           } else {
             addMessage();
           }
-        };
-
-        const { stayScrolled } = useStayScrolled(ref, { onStayScrolled });
-
-        useEffect(() => { addMessage(); }, []);
-        useLayoutEffect(() => { stayScrolled(); }, [messages]);
+        }, [messages]);
 
         const style = {
           height: testHeight,
@@ -238,7 +211,6 @@ describe('react-stay-scrolled', () => {
 
       const recursion = (i) => {
         let stayScrolled;
-        const onStayScrolled = sinon.spy();
         const storeController = (controllers) => { ({ stayScrolled } = controllers); };
 
         const onScroll = () => {
@@ -246,10 +218,7 @@ describe('react-stay-scrolled', () => {
           const domMaxScrollTop = maxScrollTop(dom);
           const expectedResult = i >= domMaxScrollTop - inaccuracy;
 
-          stayScrolled();
-
-          expect(onStayScrolled.calledOnce).to.equal(true);
-          expect(onStayScrolled.firstCall.args).to.deep.equal([expectedResult]);
+          expect(stayScrolled()).to.equal(expectedResult);
           expect(isScrolled(dom)).to.equal(expectedResult);
 
           act(() => {
@@ -267,7 +236,6 @@ describe('react-stay-scrolled', () => {
           initialScroll={i}
           inaccuracy={inaccuracy}
           onScroll={onScroll}
-          onStayScrolled={onStayScrolled}
           provideControllers={storeController}
         />, container);
       };

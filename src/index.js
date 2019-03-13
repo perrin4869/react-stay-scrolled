@@ -7,7 +7,6 @@ const noop = () => {};
 export default (domRef, {
   initialScroll = null,
   inaccuracy = 0,
-  onStayScrolled = noop,
   onScrolled = noop,
   runScroll = defaultRunScroll,
 } = {}) => {
@@ -38,10 +37,11 @@ export default (domRef, {
     scroll(Infinity);
   }, [scroll]);
 
-  const stayScrolled = useCallback((notify = true) => {
+  const stayScrolled = useCallback(() => {
     if (wasScrolled.current) scrollBottom();
-    if (notify) onStayScrolled(wasScrolled.current);
-  }, [scrollBottom, onStayScrolled]);
+
+    return wasScrolled.current;
+  }, [scrollBottom]);
 
   useLayoutEffect(() => {
     if (initialScroll !== null) {

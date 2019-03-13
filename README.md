@@ -70,19 +70,14 @@ const Messages = ({ messages }) => {
   const [notifyNewMessage, setNotifyNewMessage] = useState(false);
   const ref = useRef();
 
-  // Tell the user to scroll down to see the newest messages if the element wasn't scrolled down
-  const onStayScrolled = useCallback(isScrolled => setNotifyNewMessage(!isScrolled), []);
-
     // The element just scrolled down - remove new messages notification, if any
   const onScrolled = useCallback(() => setNotifyNewMessage(false), []);
 
-  const { stayScrolled } = useStayScrolled(ref, {
-    onScrolled,
-    onStayScrolled,
-  });
+  const { stayScrolled } = useStayScrolled(ref, { onScrolled });
 
   useLayoutEffect(() => {
-    stayScrolled();
+    // Tell the user to scroll down to see the newest messages if the element wasn't scrolled down
+    setNotifyNewMessage(!stayScrolled());
   }, [messages.length])
 
   return (
@@ -110,7 +105,6 @@ Type: `object`, default:
 {
   initialScroll: null,
   inaccuracy: 0,
-  onStayScrolled: noop,
   onScrolled: noop,
   runScroll: defaultRunScroll,
 }
@@ -127,12 +121,6 @@ If provided, the scrolling element will mount scrolled with the provided value. 
 Type: `number`, default: `0`
 
 Defines an error margin, in pixels, under which `stayScrolled` will still scroll to the bottom
-
-### options.onStayScrolled
-
-Type: `function(scrolled)`
-
-Fires after executing `stayScrolled`, notifies back whether or not the component is scrolled down. Useful to know if you need to notify the user about new messages
 
 #### scrolled
 
@@ -191,15 +179,9 @@ Two functions used for controlling scroll behavior.
 
 ### stayScrolled
 
-Type: `function(notify = true)`
+Type: `function() => bool`
 
-Scrolls down the element if it was already scrolled down - useful for when a user is reading previous messages, and you don't want to interrupt
-
-#### notify
-
-Type: `boolean` optional, default `true`.
-
-If `true`, it fires an `onStayScrolled` event after execution, notifying whether or not the component stayed scrolled
+Scrolls down the element if it was already scrolled down - useful for when a user is reading previous messages, and you don't want to interrupt. Returns true if it scrolled down, false otherwise.
 
 ### scroll
 
