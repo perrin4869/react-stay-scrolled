@@ -70,10 +70,12 @@ const Messages = ({ messages }) => {
   const [notifyNewMessage, setNotifyNewMessage] = useState(false);
   const ref = useRef();
 
-    // The element just scrolled down - remove new messages notification, if any
-  const onScrolled = useCallback(() => setNotifyNewMessage(false), []);
+  const { stayScrolled, isScrolled } = useStayScrolled(ref);
 
-  const { stayScrolled } = useStayScrolled(ref, { onScrolled });
+    // The element just scrolled down - remove new messages notification, if any
+  const onScroll = useCallback(() => {
+    if (isScrolled()) setNotifyNewMessage(false);
+  }, []);
 
   useLayoutEffect(() => {
     // Tell the user to scroll down to see the newest messages if the element wasn't scrolled down
@@ -81,7 +83,7 @@ const Messages = ({ messages }) => {
   }, [messages.length])
 
   return (
-    <div ref={ref}>
+    <div ref={ref} onScroll={onScroll}>
       {messages.map((message, i) => <Message key={i} text={message} />)}
       {notifyNewMessage && <div>Scroll down to new message</div>}
     </div>
@@ -105,7 +107,6 @@ Type: `object`, default:
 {
   initialScroll: null,
   inaccuracy: 0,
-  onScrolled: noop,
   runScroll: defaultRunScroll,
 }
 ```
@@ -127,12 +128,6 @@ Defines an error margin, in pixels, under which `stayScrolled` will still scroll
 Type: `boolean`
 
 True if the call to `stayScrolled` performed a scroll to bottom, false otherwise
-
-### onScrolled
-
-Type: `function()`
-
-Fires when the element scrolls down, useful to remove the new message notification
 
 ### runScroll
 
@@ -173,27 +168,33 @@ const velocityRunScroll = (dom, offset) => {
 
 ## Return value
 
-Type: `object`, shape: `{ stayScrolled, scrollBottom }`
+Type: `object`, shape: `{ stayScrolled, scrollBottom, scroll, isScrolled }`
 
 Two functions used for controlling scroll behavior.
 
 ### stayScrolled
 
-Type: `function() => bool`
+Type: `function: () => bool`
 
 Scrolls down the element if it was already scrolled down - useful for when a user is reading previous messages, and you don't want to interrupt. Returns true if it scrolled down, false otherwise.
 
 ### scroll
 
-Type: `function(position)`
+Type: `function: (position: Integer) => void`
 
 Scrolls down to the desired position. If given `Infinity`, it scrolls to the bottom
 
 ### scrollDown
 
-Type: `function()`
+Type: `function: () => void`
 
 Scrolls down the wrapper element, regardless of current position. Equivalent to `() => scroll(Infinity)`.
+
+### isScrolled
+
+Type: `function: () => bool`
+
+Returns true if the dom element is scrolled all the way down (within the inaccuracy provided).
 
 ## TODO
 

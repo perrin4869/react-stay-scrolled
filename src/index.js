@@ -2,28 +2,24 @@ import { useLayoutEffect, useRef, useCallback } from 'react';
 import invariant from 'tiny-invariant';
 import { maxScrollTop, runScroll as defaultRunScroll } from './util';
 
-const noop = () => {};
-
 export default (domRef, {
   initialScroll = null,
   inaccuracy = 0,
-  onScrolled = noop,
   runScroll = defaultRunScroll,
 } = {}) => {
   const wasScrolled = useRef(null);
 
-  const isScrolled = () => Math.ceil(domRef.current.scrollTop) >= maxScrollTop(domRef.current) - inaccuracy;
+  const isScrolled = useCallback(
+    () => Math.ceil(domRef.current.scrollTop) >= maxScrollTop(domRef.current) - inaccuracy,
+    [inaccuracy],
+  );
 
   useLayoutEffect(() => {
-    const onScroll = () => {
-      if (wasScrolled.current = isScrolled()) { // eslint-disable-line no-cond-assign
-        onScrolled();
-      }
-    };
+    const onScroll = () => { wasScrolled.current = isScrolled(); };
 
     domRef.current.addEventListener('scroll', onScroll);
     return () => domRef.current.removeEventListener('scroll', onScroll);
-  }, [onScrolled]);
+  }, []);
 
   const scroll = useCallback((position) => {
     invariant(domRef.current !== null, `Trying to scroll to the bottom, but no element was found.
@@ -55,5 +51,6 @@ export default (domRef, {
     scroll,
     stayScrolled,
     scrollBottom,
+    isScrolled,
   };
 };
