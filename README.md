@@ -123,15 +123,9 @@ Type: `number`, default: `0`
 
 Defines an error margin, in pixels, under which `stayScrolled` will still scroll to the bottom
 
-#### scrolled
+### options.runScroll
 
-Type: `boolean`
-
-True if the call to `stayScrolled` performed a scroll to bottom, false otherwise
-
-### runScroll
-
-Type: `function(dom, offset)`, default: `(dom, offset) => { dom.scrollTop = offset; }`
+Type: `function: (dom, offset) => undefined`, default: `(dom, offset) => { dom.scrollTop = offset; }`
 
 Used for animating dom scrolling. You can use [dynamic.js](http://dynamicsjs.com/), [Velocity](https://github.com/julianshapiro/velocity), [jQuery](https://jquery.com/), or your favorite animation library. Here are examples of possible, tested `runScroll` values:
 
@@ -170,13 +164,13 @@ const velocityRunScroll = (dom, offset) => {
 
 Type: `object`, shape: `{ stayScrolled, scrollBottom, scroll, isScrolled }`
 
-Two functions used for controlling scroll behavior.
+Four functions used for controlling scroll behavior.
 
 ### stayScrolled
 
 Type: `function: () => bool`
 
-Scrolls down the element if it was already scrolled down - useful for when a user is reading previous messages, and you don't want to interrupt. Returns true if it scrolled down, false otherwise.
+Scrolls down the element if it was already scrolled down - useful for when a user is reading previous messages, and you don't want to interrupt. Returns true if it performed a scrolled down, false otherwise.
 
 ### scroll
 
