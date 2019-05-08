@@ -1,6 +1,10 @@
-import { useLayoutEffect, useRef, useCallback } from 'react';
+import {
+  useEffect, useLayoutEffect, useRef, useCallback,
+} from 'react';
 import invariant from 'tiny-invariant';
 import { maxScrollTop } from './util';
+
+const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export default (domRef, {
   initialScroll = null,
@@ -14,7 +18,7 @@ export default (domRef, {
     [inaccuracy],
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const onScroll = () => { wasScrolled.current = isScrolled(); };
 
     domRef.current.addEventListener('scroll', onScroll);
@@ -39,7 +43,7 @@ export default (domRef, {
     return wasScrolled.current;
   }, [scrollBottom]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (initialScroll !== null) {
       scroll(initialScroll);
     }
