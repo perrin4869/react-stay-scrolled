@@ -222,11 +222,6 @@ Type: `function: () => bool`
 
 Returns true if the dom element is scrolled all the way down (within the inaccuracy provided).
 
-## TODO
-
-* Try to automate scrolling on some of the use-cases
-* Improve examples
-
 ## License
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
