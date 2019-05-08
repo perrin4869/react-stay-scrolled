@@ -1,11 +1,11 @@
 import { useLayoutEffect, useRef, useCallback } from 'react';
 import invariant from 'tiny-invariant';
-import { maxScrollTop, runScroll as defaultRunScroll } from './util';
+import { maxScrollTop } from './util';
 
 export default (domRef, {
   initialScroll = null,
   inaccuracy = 0,
-  runScroll = defaultRunScroll,
+  runScroll = (offset) => { domRef.current.scrollTop = offset; }, // eslint-disable-line no-param-reassign
 } = {}) => {
   const wasScrolled = useRef(null);
 
@@ -26,7 +26,7 @@ export default (domRef, {
       Did you call this scrollBottom before the component with this hook finished mounting?`);
 
     const offset = position === Infinity ? maxScrollTop(domRef.current) : position;
-    runScroll(domRef.current, offset);
+    runScroll(offset);
   }, [runScroll]);
 
   const scrollBottom = useCallback(() => {

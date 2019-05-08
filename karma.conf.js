@@ -85,6 +85,7 @@ module.exports = (config) => {
             'node_modules/react-dom/test-utils.js': ['act'],
             'node_modules/react/index.js': [
               'createElement',
+              'useMemo',
               'useEffect',
               'useLayoutEffect',
               'useCallback',

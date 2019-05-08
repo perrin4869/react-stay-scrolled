@@ -125,7 +125,7 @@ Defines an error margin, in pixels, under which `stayScrolled` will still scroll
 
 ### options.runScroll
 
-Type: `function: (dom, offset) => undefined`, default: `(dom, offset) => { dom.scrollTop = offset; }`
+Type: `function: (offset) => undefined`, default: `(offset) => { ref.current.scrollTop = offset; }` where `ref` is the first value
 
 Used for animating dom scrolling. You can use [dynamic.js](http://dynamicsjs.com/), [Velocity](https://github.com/julianshapiro/velocity), [jQuery](https://jquery.com/), or your favorite animation library. Here are examples of possible, tested `runScroll` values:
 
@@ -133,8 +133,8 @@ Used for animating dom scrolling. You can use [dynamic.js](http://dynamicsjs.com
 const easing = 'linear';
 const duration = 100;
 
-const dynamicsRunScroll = (dom, offset) => {
-  dynamics.animate(dom, {
+const dynamicsRunScroll = (domRef) => (offset) => {
+  dynamics.animate(domRef.current, {
     scrollTop: offset,
   }, {
     type: dynamics[easing],
@@ -142,16 +142,16 @@ const dynamicsRunScroll = (dom, offset) => {
   });
 };
 
-const jqueryRunScroll = (dom, offset) => {
-  jQuery(dom).animate({ scrollTop: offset }, duration, easing);
+const jqueryRunScroll = (domRef) => (offset) => {
+  jQuery(domRef.current).animate({ scrollTop: offset }, duration, easing);
 };
 
-const velocityRunScroll = (dom, offset) => {
+const velocityRunScroll = (domRef) => (offset) => {
   Velocity(
-    dom.firstChild,
+    domRef.current.firstChild,
     'scroll',
     {
-      container: dom,
+      container: domRef.current,
       easing,
       duration,
       offset,

@@ -1,5 +1,5 @@
 import React, {
-  StrictMode, useState, useRef, useEffect, useLayoutEffect,
+  StrictMode, useState, useRef, useEffect, useLayoutEffect, useMemo,
 } from 'react';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
@@ -22,10 +22,12 @@ describe('react-stay-scrolled', () => {
   const TestComponent = ({
     provideControllers = () => {},
     onScroll = () => {},
+    getRunScroll,
     ...props
   }) => {
     const ref = useRef(null);
-    provideControllers(useStayScrolled(ref, props));
+    const runScroll = useMemo(() => (getRunScroll ? getRunScroll(ref) : undefined), [getRunScroll, ref]);
+    provideControllers(useStayScrolled(ref, { ...props, runScroll }));
 
     const style = {
       height: testHeight,
@@ -43,11 +45,13 @@ describe('react-stay-scrolled', () => {
   TestComponent.propTypes = {
     onScroll: PropTypes.func,
     provideControllers: PropTypes.func,
+    getRunScroll: PropTypes.func,
   };
 
   TestComponent.defaultProps = {
     onScroll: () => {},
     provideControllers: () => {},
+    getRunScroll: undefined,
   };
 
   function isDomScrolled(node) {
@@ -256,8 +260,8 @@ describe('react-stay-scrolled', () => {
     const duration = 100;
     const easing = 'linear';
 
-    const dynamicsRunScroll = (dom, offset) => {
-      dynamics.animate(dom, {
+    const dynamicsRunScroll = dom => (offset) => {
+      dynamics.animate(dom.current, {
         scrollTop: offset,
       }, {
         type: dynamics[easing],
@@ -265,16 +269,16 @@ describe('react-stay-scrolled', () => {
       });
     };
 
-    const jqueryRunScroll = (dom, offset) => {
-      jQuery(dom).animate({ scrollTop: offset }, duration, easing);
+    const jqueryRunScroll = dom => (offset) => {
+      jQuery(dom.current).animate({ scrollTop: offset }, duration, easing);
     };
 
-    const velocityRunScroll = (dom, offset) => {
+    const velocityRunScroll = dom => (offset) => {
       Velocity(
-        dom.firstChild,
+        dom.current.firstChild,
         'scroll',
         {
-          container: dom,
+          container: dom.current,
           easing,
           duration,
           offset,
@@ -294,7 +298,7 @@ describe('react-stay-scrolled', () => {
         <TestComponent
           onScroll={onScroll}
           provideControllers={storeController}
-          runScroll={runScroll}
+          getRunScroll={runScroll}
         />,
         container,
       );
@@ -321,7 +325,7 @@ describe('react-stay-scrolled', () => {
         <TestComponent
           onScroll={onScroll}
           provideControllers={storeController}
-          runScroll={runScroll}
+          getRunScroll={runScroll}
         />,
         container,
       );
