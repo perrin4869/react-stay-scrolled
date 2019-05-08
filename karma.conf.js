@@ -91,6 +91,8 @@ module.exports = (config) => {
               'useCallback',
               'useRef',
               'useState',
+              'forwardRef', // required by react-spring
+              'useImperativeHandle', // required by react-spring
               'StrictMode',
             ],
           },

@@ -91,6 +91,38 @@ const Messages = ({ messages }) => {
 };
 ```
 
+You can use [react-spring](https://www.react-spring.io/) to animate the scroll:
+
+```javascript
+import React, { useRef, useCallback, useLayoutEffect } from 'react';
+import useStayScrolled from 'react-stay-scrolled';
+import { useSpring, animated } from 'react-spring';
+
+const SpringStayScrolled = ({
+  provideControllers,
+  onScroll,
+  getRunScroll,
+}) => {
+  const ref = useRef(null);
+  const [{ scrollTop }, updateScroll] = useSpring(() => ({ scrollTop: 0 }));
+  const runScroll = useCallback(offset => updateScroll({
+    scrollTop: offset,
+    from: { scrollTop: ref.current ? ref.current.scrollTop : 0 },
+    reset: true,
+  }), [updateScroll])
+
+  const { scrollBottom } = useStayScrolled(ref, { runScroll });
+
+  useLayoutEffect(() => { scrollBottom(); }, []);
+
+  return (
+    <animated.div ref={ref} scrollTop={scrollTop}>
+      {/* ... */}
+    </animated.div>
+  );
+};
+```
+
 ## Arguments
 
 ### ref

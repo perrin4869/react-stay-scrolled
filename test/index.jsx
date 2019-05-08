@@ -3,6 +3,8 @@ import React, {
 } from 'react';
 import ReactDOM from 'react-dom';
 import { act } from 'react-dom/test-utils';
+import { useSpring, animated } from 'react-spring';
+
 import PropTypes from 'prop-types';
 import Velocity from 'velocity-animate';
 import jQuery from 'jquery';
@@ -260,6 +262,46 @@ describe('react-stay-scrolled', () => {
     const duration = 100;
     const easing = 'linear';
 
+    const springRunScroll = (updateScroll, dom) => offset => updateScroll({
+      scrollTop: offset,
+      from: { scrollTop: dom.current ? dom.current.scrollTop : 0 },
+      reset: true,
+      config: { duration },
+    });
+
+    const SpringTestComponent = ({
+      provideControllers,
+      onScroll,
+      getRunScroll,
+    }) => {
+      const ref = useRef(null);
+      const [{ scrollTop }, updateScroll] = useSpring(() => ({ scrollTop: 0 }));
+      const runScroll = useMemo(
+        () => (getRunScroll ? getRunScroll(updateScroll, ref) : undefined),
+        [getRunScroll, updateScroll, ref],
+      );
+
+      provideControllers(useStayScrolled(ref, { runScroll }));
+
+      const style = {
+        height: testHeight,
+        width: 100,
+        overflow: 'auto',
+      };
+
+      return (
+        <animated.div ref={ref} style={style} onScroll={onScroll} scrollTop={scrollTop}>
+          <div style={{ height: testScrollHeight, width: 100 }} />
+        </animated.div>
+      );
+    };
+
+    SpringTestComponent.propTypes = {
+      onScroll: PropTypes.func.isRequired,
+      provideControllers: PropTypes.func.isRequired,
+      getRunScroll: PropTypes.func.isRequired,
+    };
+
     const dynamicsRunScroll = dom => (offset) => {
       dynamics.animate(dom.current, {
         scrollTop: offset,
@@ -286,7 +328,7 @@ describe('react-stay-scrolled', () => {
       );
     };
 
-    const testAnimation = (runScroll) => {
+    const testAnimation = (runScroll, Component = TestComponent) => {
       let scrollBottom;
       const storeController = (controllers) => { ({ scrollBottom } = controllers); };
       const onScroll = spy(() => {
@@ -295,7 +337,7 @@ describe('react-stay-scrolled', () => {
       });
 
       render(
-        <TestComponent
+        <Component
           onScroll={onScroll}
           provideControllers={storeController}
           getRunScroll={runScroll}
@@ -315,14 +357,14 @@ describe('react-stay-scrolled', () => {
       });
     };
 
-    const testAnimationOnScrolled = (runScroll) => {
+    const testAnimationOnScrolled = (runScroll, Component = TestComponent) => {
       let scrollBottom;
       let isScrolled;
       const storeController = (controllers) => { ({ scrollBottom, isScrolled } = controllers); };
       const onScroll = spy();
 
       render(
-        <TestComponent
+        <Component
           onScroll={onScroll}
           provideControllers={storeController}
           getRunScroll={runScroll}
@@ -342,6 +384,8 @@ describe('react-stay-scrolled', () => {
       });
     };
 
+    it('should animate scrolling with react-spring', () => testAnimation(springRunScroll, SpringTestComponent));
+    it('should report isScrolled correctly when using react-spring', () => testAnimationOnScrolled(springRunScroll, SpringTestComponent));
     it('should animate scrolling with dynamics.js', () => testAnimation(dynamicsRunScroll));
     it('should report isScrolled correctly when using dynamics.js', () => testAnimationOnScrolled(dynamicsRunScroll));
     it('should animate scrolling with velocity', () => testAnimation(velocityRunScroll));
