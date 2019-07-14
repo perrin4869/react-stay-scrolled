@@ -29,7 +29,7 @@ export default (domRef, {
     invariant(domRef.current !== null, `Trying to scroll to the bottom, but no element was found.
       Did you call this scrollBottom before the component with this hook finished mounting?`);
 
-    const offset = position === Infinity ? maxScrollTop(domRef.current) : position;
+    const offset = Math.min(maxScrollTop(domRef.current), position);
     runScroll(offset);
   }, [runScroll]);
 
