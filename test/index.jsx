@@ -155,7 +155,7 @@ describe('react-stay-scrolled', () => {
         const ref = useRef(null);
 
         const addMessage = () => {
-          setMessages(prevMessages => prevMessages.concat(['foo']));
+          setMessages((prevMessages) => prevMessages.concat(['foo']));
         };
 
         const { stayScrolled } = useStayScrolled(ref);
@@ -262,7 +262,7 @@ describe('react-stay-scrolled', () => {
     const duration = 100;
     const easing = 'linear';
 
-    const springRunScroll = (updateScroll, dom) => offset => updateScroll({
+    const springRunScroll = (updateScroll, dom) => (offset) => updateScroll({
       scrollTop: offset,
       from: { scrollTop: dom.current ? dom.current.scrollTop : 0 },
       reset: true,
@@ -302,7 +302,7 @@ describe('react-stay-scrolled', () => {
       getRunScroll: PropTypes.func.isRequired,
     };
 
-    const dynamicsRunScroll = dom => (offset) => {
+    const dynamicsRunScroll = (dom) => (offset) => {
       dynamics.animate(dom.current, {
         scrollTop: offset,
       }, {
@@ -311,11 +311,11 @@ describe('react-stay-scrolled', () => {
       });
     };
 
-    const jqueryRunScroll = dom => (offset) => {
+    const jqueryRunScroll = (dom) => (offset) => {
       jQuery(dom.current).animate({ scrollTop: offset }, duration, easing);
     };
 
-    const velocityRunScroll = dom => (offset) => {
+    const velocityRunScroll = (dom) => (offset) => {
       Velocity(
         dom.current.firstChild,
         'scroll',

@@ -29,7 +29,7 @@ const App = () => {
   const [messages, setMessages] = useState(initialMessages);
 
   useInterval(() => {
-    setMessages(prevMessages => prevMessages.concat([message]));
+    setMessages((prevMessages) => prevMessages.concat([message]));
   }, 500);
 
   useLayoutEffect(() => {
