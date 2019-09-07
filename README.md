@@ -149,7 +149,7 @@ Type: `number`, default: `null`
 
 If provided, the scrolling element will mount scrolled with the provided value. If `Infinity` is provided, it will mount scrolled to the bottom.
 
-### options.innacuracy
+### options.inaccuracy
 
 Type: `number`, default: `0`
 
