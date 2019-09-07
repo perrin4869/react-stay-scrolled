@@ -5,7 +5,7 @@
   "main": "dist/react-stay-scrolled.cjs.js",
   "module": "dist/react-stay-scrolled.esm.js",
   "scripts": {
-    "lint": "eslint 'src/*.js' 'test/*.js?(x)' 'examples/src/*.js?(x)'",
+    "lint": "eslint 'src/*.js' 'test/*.js?(x)'",
     "pretest": "npm run lint",
     "test": "NODE_ENV=test karma start --single-run --no-auto-watch",
     "tdd": "NODE_ENV=test karma start",
@@ -30,11 +30,11 @@
   },
   "homepage": "https://github.com/perrin4869/react-stay-scrolled#readme",
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
     "@babel/preset-react": "^7.0.0",
-    "babel-plugin-dev-expression": "^0.2.1",
-    "babel-plugin-istanbul": "^5.1.1",
+    "babel-plugin-dev-expression": "^0.2.2",
+    "babel-plugin-istanbul": "^5.2.0",
     "chai": "^4.2.0",
     "dynamics.js": "^1.1.5",
     "eslint": "^6.3.0",
@@ -42,7 +42,8 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
-    "jquery": "^3.3.1",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "jquery": "^3.4.1",
     "karma": "^4.3.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-coverage": "^2.0.1",
@@ -52,25 +53,25 @@
     "karma-rollup-preprocessor": "^7.0.2",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.32",
-    "mocha": "^6.0.2",
+    "mocha": "^6.2.0",
     "prop-types": "^15.7.2",
-    "puppeteer": "^1.13.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-spring": "^8.0.20",
+    "puppeteer": "^1.19.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-spring": "^8.0.27",
     "rollup": "^1.20.3",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-terser": "^5.1.1",
-    "sinon": "^7.2.7",
+    "sinon": "^7.4.2",
     "velocity-animate": "^1.5.2"
   },
   "peerDependencies": {
-    "react": ">=16.8.4"
+    "react": ">=16.9.0"
   },
   "dependencies": {
-    "tiny-invariant": "^1.0.3"
+    "tiny-invariant": "^1.0.6"
   }
 }
