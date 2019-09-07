@@ -73,9 +73,7 @@ module.exports = (config) => {
         require('rollup-plugin-replace')({ 'process.env.NODE_ENV': JSON.stringify(env) }), // this is for react
         require('rollup-plugin-babel')({ exclude: 'node_modules/**' }),
         require('rollup-plugin-node-resolve')({
-          jsnext: true,
-          main: true,
-          browser: true,
+          mainFields: ['module', 'browser', 'main'],
         }),
         require('rollup-plugin-commonjs')({
           include: 'node_modules/**',
