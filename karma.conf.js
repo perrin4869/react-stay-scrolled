@@ -74,6 +74,7 @@ module.exports = (config) => {
         require('rollup-plugin-babel')({ exclude: 'node_modules/**' }),
         require('rollup-plugin-node-resolve')({
           mainFields: ['module', 'browser', 'main'],
+          extensions: ['.js', '.jsx'],
         }),
         require('rollup-plugin-commonjs')({
           include: 'node_modules/**',

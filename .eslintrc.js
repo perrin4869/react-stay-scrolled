@@ -1,7 +1,7 @@
 module.exports = {
   extends: 'airbnb',
   env: {
-    browser: true
+    browser: true,
   },
   rules: {
     'no-multi-assign': 0,
@@ -12,7 +12,6 @@ module.exports = {
     }],
     'import/no-extraneous-dependencies': ['error', {
       devDependencies: [
-        'test/**',
         'karma.conf.js',
         'rollup.config.js',
         'examples/rollup.config.js',
