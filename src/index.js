@@ -2,14 +2,17 @@ import {
   useEffect, useLayoutEffect, useRef, useCallback,
 } from 'react';
 import invariant from 'tiny-invariant';
+import memoize from 'memoize-one';
 import { maxScrollTop } from './util';
 
+// eslint-disable-next-line no-param-reassign
+const defaultRunScroll = memoize((domRef) => (offset) => { domRef.current.scrollTop = offset; });
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export default (domRef, {
   initialScroll = null,
   inaccuracy = 0,
-  runScroll = (offset) => { domRef.current.scrollTop = offset; }, // eslint-disable-line no-param-reassign
+  runScroll = defaultRunScroll(domRef),
 } = {}) => {
   const wasScrolled = useRef(null);
 
