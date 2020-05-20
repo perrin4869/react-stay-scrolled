@@ -157,6 +157,32 @@ describe('react-stay-scrolled', () => {
       expect(isDomScrolled(container.firstChild)).to.equal(false);
     });
 
+    it('should memoize default runScroll', () => {
+      // https://github.com/dotcore64/react-stay-scrolled/issues/107
+      const cb = spy();
+
+      const MemoizeTestComponent = ({ prop }) => {
+        const ref = useRef(null);
+        const { stayScrolled } = useStayScrolled(ref);
+
+        useLayoutEffect(() => {
+          cb();
+        }, [stayScrolled]);
+
+        return <div ref={ref}>{prop}</div>;
+      };
+
+      MemoizeTestComponent.propTypes = {
+        prop: PropTypes.string.isRequired,
+      };
+
+      render(<MemoizeTestComponent prop="foo" />, container);
+      // trigger rerender, stayScrolled should be unchanged
+      render(<MemoizeTestComponent prop="bar" />, container);
+
+      expect(cb.callCount).to.equal(1);
+    });
+
     it('should stay scrolled when adding new elements', (done) => {
       const Messages = () => {
         const [messages, setMessages] = useState([]);
