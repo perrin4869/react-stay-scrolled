@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/perrin4869/react-stay-scrolled.git"
+    "url": "git+https://github.com/dotcore64/react-stay-scrolled.git"
   },
   "files": [
     "dist"
@@ -26,9 +26,9 @@
   "author": "Julian Grinblat <julian@dotcore.co.il>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/perrin4869/react-stay-scrolled/issues"
+    "url": "https://github.com/dotcore64/react-stay-scrolled/issues"
   },
-  "homepage": "https://github.com/perrin4869/react-stay-scrolled#readme",
+  "homepage": "https://github.com/dotcore64/react-stay-scrolled#readme",
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.9.6",

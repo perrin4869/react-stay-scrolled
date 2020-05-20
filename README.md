@@ -226,17 +226,17 @@ Returns true if the dom element is scrolled all the way down (within the inaccur
 
 See the [LICENSE](LICENSE.md) file for license rights and limitations (MIT).
 
-[build-badge]: https://img.shields.io/travis/perrin4869/react-stay-scrolled/master.svg?style=flat-square
-[build]: https://travis-ci.org/perrin4869/react-stay-scrolled
+[build-badge]: https://img.shields.io/travis/dotcore64/react-stay-scrolled/master.svg?style=flat-square
+[build]: https://travis-ci.org/dotcore64/react-stay-scrolled
 
 [npm-badge]: https://img.shields.io/npm/v/react-stay-scrolled.svg?style=flat-square
 [npm]: https://www.npmjs.org/package/react-stay-scrolled
 
-[coveralls-badge]: https://img.shields.io/coveralls/perrin4869/react-stay-scrolled/master.svg?style=flat-square
-[coveralls]: https://coveralls.io/r/perrin4869/react-stay-scrolled
+[coveralls-badge]: https://img.shields.io/coveralls/dotcore64/react-stay-scrolled/master.svg?style=flat-square
+[coveralls]: https://coveralls.io/r/dotcore64/react-stay-scrolled
 
-[dependency-status-badge]: https://david-dm.org/perrin4869/react-stay-scrolled.svg?style=flat-square
-[dependency-status]: https://david-dm.org/perrin4869/react-stay-scrolled
+[dependency-status-badge]: https://david-dm.org/dotcore64/react-stay-scrolled.svg?style=flat-square
+[dependency-status]: https://david-dm.org/dotcore64/react-stay-scrolled
 
-[dev-dependency-status-badge]: https://david-dm.org/perrin4869/react-stay-scrolled/dev-status.svg?style=flat-square
-[dev-dependency-status]: https://david-dm.org/perrin4869/react-stay-scrolled#info=devDependencies
+[dev-dependency-status-badge]: https://david-dm.org/dotcore64/react-stay-scrolled/dev-status.svg?style=flat-square
+[dev-dependency-status]: https://david-dm.org/dotcore64/react-stay-scrolled#info=devDependencies
