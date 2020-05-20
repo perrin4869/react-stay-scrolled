@@ -70,32 +70,13 @@ module.exports = (config) => {
 
     rollupPreprocessor: {
       plugins: [
-        require('rollup-plugin-replace')({ 'process.env.NODE_ENV': JSON.stringify(env) }), // this is for react
-        require('rollup-plugin-babel')({ exclude: 'node_modules/**' }),
-        require('rollup-plugin-node-resolve')({
+        require('@rollup/plugin-replace')({ 'process.env.NODE_ENV': JSON.stringify(env) }), // this is for react
+        require('@rollup/plugin-babel').default({ exclude: 'node_modules/**' }),
+        require('@rollup/plugin-node-resolve').default({
           mainFields: ['module', 'browser', 'main'],
           extensions: ['.js', '.jsx'],
         }),
-        require('rollup-plugin-commonjs')({
-          include: 'node_modules/**',
-          namedExports: {
-            'node_modules/chai/index.js': ['expect'],
-            'node_modules/prop-types/index.js': ['func'],
-            'node_modules/react-dom/test-utils.js': ['act'],
-            'node_modules/react/index.js': [
-              'createElement',
-              'useMemo',
-              'useEffect',
-              'useLayoutEffect',
-              'useCallback',
-              'useRef',
-              'useState',
-              'forwardRef', // required by react-spring
-              'useImperativeHandle', // required by react-spring
-              'StrictMode',
-            ],
-          },
-        }),
+        require('@rollup/plugin-commonjs')({ include: 'node_modules/**' }),
       ],
       output: {
         format: 'iife',
