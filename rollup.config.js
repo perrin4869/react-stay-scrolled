@@ -27,11 +27,11 @@ export default [{
   input,
   output: {
     file: `dist/${pkg.name}.umd.js`, format: 'umd', globals, name, exports: 'named',
+    plugins: [terser()],
   },
   plugins: [
     ...plugins,
     resolve(),
     commonjs(),
-    terser(),
   ],
 }];
