@@ -22,10 +22,14 @@ export default (domRef, {
   );
 
   useEffect(() => {
-    const onScroll = () => { wasScrolled.current = isScrolled(); };
 
-    domRef.current.addEventListener('scroll', onScroll);
-    return () => domRef.current.removeEventListener('scroll', onScroll);
+    const currentRef = domRef.current;
+    if (!currentRef) return;
+    
+    const onScroll = () => { wasScrolled.current = isScrolled(); };
+    currentRef.addEventListener('scroll', onScroll);
+    
+    return () => currentRef.removeEventListener('scroll', onScroll);
   }, []);
 
   const scroll = useCallback((position) => {
