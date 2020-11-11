@@ -25,7 +25,10 @@ export default (domRef, {
     const onScroll = () => { wasScrolled.current = isScrolled(); };
 
     domRef.current.addEventListener('scroll', onScroll);
-    return () => domRef.current.removeEventListener('scroll', onScroll);
+    return () => {
+      if (domRef.current)
+        domRef.current.removeEventListener('scroll', onScroll);
+    }
   }, []);
 
   const scroll = useCallback((position) => {
