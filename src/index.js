@@ -26,8 +26,7 @@ export default (domRef, {
 
     domRef.current.addEventListener('scroll', onScroll);
     return () => {
-      if (domRef.current)
-        domRef.current.removeEventListener('scroll', onScroll);
+        domRef.current?.removeEventListener('scroll', onScroll);
     }
   }, []);
 
