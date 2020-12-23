@@ -3,6 +3,9 @@ module.exports = {
   env: {
     browser: true,
   },
+  parserOptions: {
+    ecmaVersion: 2020,
+  },
   rules: {
     'no-multi-assign': 0,
     'max-len': ['error', 150],
