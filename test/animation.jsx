@@ -41,7 +41,6 @@ export const velocityRunScroll = (dom) => (offset) => {
   );
 };
 
-
 export const springRunScroll = (updateScroll, dom) => (offset) => updateScroll({
   scrollTop: offset,
   from: { scrollTop: dom.current ? dom.current.scrollTop : 0 },

@@ -11,14 +11,14 @@ module.exports = {
     'max-len': ['error', 150],
     'func-names': 0,
     'new-cap': [2, {
-      capIsNewExceptions: ['Velocity']
+      capIsNewExceptions: ['Velocity'],
     }],
     'import/no-extraneous-dependencies': ['error', {
       devDependencies: [
         'karma.conf.js',
         'rollup.config.js',
         'examples/rollup.config.js',
-      ]
-    }]
-  }
-}
+      ],
+    }],
+  },
+};

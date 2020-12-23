@@ -62,7 +62,6 @@ TestComponent.defaultProps = {
   getRunScroll: undefined,
 };
 
-
 describe('react-stay-scrolled', () => {
   function isDomScrolled(node) {
     return node.scrollTop === maxScrollTop(node);
@@ -286,7 +285,6 @@ describe('react-stay-scrolled', () => {
           </div>
         );
       };
-
 
       render(<Parent />, container);
     });
