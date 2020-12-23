@@ -22,12 +22,11 @@ export default (domRef, {
   );
 
   useEffect(() => {
-    const ref = domRef.current;
     const onScroll = () => { wasScrolled.current = isScrolled(); };
-    
+
     ref.addEventListener('scroll', onScroll);
-    
-    return () => { ref.removeEventListener('scroll', onScroll); };
+    // in react 17 the cleanup can happen after the element gets unmounted
+    return () => domRef.current?.removeEventListener('scroll', onScroll);
   }, []);
 
   const scroll = useCallback((position) => {
