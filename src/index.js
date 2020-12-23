@@ -17,7 +17,7 @@ export default (domRef, {
   const wasScrolled = useRef(null);
 
   const isScrolled = useCallback(
-    () => Math.ceil(domRef.current.scrollTop) >= maxScrollTop(domRef.current) - inaccuracy,
+    () => (domRef.current === null ? false : Math.ceil(domRef.current.scrollTop) >= maxScrollTop(domRef.current) - inaccuracy),
     [inaccuracy],
   );
 
