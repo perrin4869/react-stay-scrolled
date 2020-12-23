@@ -24,7 +24,7 @@ export default (domRef, {
   useEffect(() => {
     const onScroll = () => { wasScrolled.current = isScrolled(); };
 
-    ref.addEventListener('scroll', onScroll);
+    domRef.current.addEventListener('scroll', onScroll);
     // in react 17 the cleanup can happen after the element gets unmounted
     return () => domRef.current?.removeEventListener('scroll', onScroll);
   }, []);
