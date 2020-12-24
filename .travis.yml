@@ -11,9 +11,10 @@ deploy:
     tags: true
 jobs:
   include:
-    - {}
+    - env: ""
     - env: REACT=16
 install:
+  - npm ci
   - 'if [ -n "${REACT}" ]; then npm install --no-save "react@${REACT}" "react-dom@${REACT}"; fi'
 script:
 - npm test
