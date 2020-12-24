@@ -17,8 +17,10 @@
     "url": "git+https://github.com/dotcore64/react-stay-scrolled.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
+  "types": "types/index.d.ts",
   "keywords": [
     "react-hooks",
     "scroll"
