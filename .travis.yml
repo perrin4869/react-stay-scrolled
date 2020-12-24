@@ -14,6 +14,6 @@ jobs:
     - {}
     - env: REACT=16
 install:
-  - 'if [ -n "${REACT}" ]; then npm install --no-save "react@${REACT}" "react-dom@{REACT}"; fi'
+  - 'if [ -n "${REACT}" ]; then npm install --no-save "react@${REACT}" "react-dom@${REACT}"; fi'
 script:
 - npm test
