@@ -15,5 +15,5 @@ export interface UseStayScrolledOptions {
 
 export default function useStayScrolled(
     domRef: React.RefObject<HTMLElement>,
-    options: UseStayScrolledOptions,
+    options?: UseStayScrolledOptions,
 ): UseStayScrolled;
